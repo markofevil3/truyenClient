@@ -8,7 +8,8 @@ function MangaList(tab) {
 				backgroundColor: 'transparent',
 				backgroundImage: '/images/bookShelf.png',
 				selectedBackgroundColor: 'transparent',
-				name: data[i].title
+				name: data[i].title,
+				chapter: data[i].chapter
 			});
 			for (var j = 0; j < 3; j++) {
 				var index = (i * 3) + j;
@@ -19,7 +20,7 @@ function MangaList(tab) {
 						height: '70%',
 						left: 10 + (j * (21 + 8)) + '%',
 						title: data[index].title,
-						id: data[index]._id
+						id: data[index]._id,
 					});
 					selectItem(image);
 					row.add(image);
@@ -33,9 +34,6 @@ function MangaList(tab) {
 	function selectItem(item) {
 		item.addEventListener('click', function(e) {
 			var Window = require('ui/handheld/Manga');
-			// new Window(item, tab, function(openWindow) {
-				// self.containingTab.open(openWindow);
-			// });
 			new Window(item, tab);
 		});
 	};
@@ -63,6 +61,7 @@ function MangaList(tab) {
 	},
 	function(response) {
 		listManga = JSON.parse(response).data;
+		Ti.API.info(JSON.stringify(listManga));
 		var tbl_data = setRowData(listManga);
 		//header with search
 		var createCustomView = function() {

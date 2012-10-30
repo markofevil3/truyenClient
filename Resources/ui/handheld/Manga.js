@@ -78,7 +78,7 @@ function Manga(item, tab) {
 		'id': item.id
 	},
 	function(response) {
-		var listChapters = JSON.parse(response).data;
+		var listChapters = JSON.parse(response).data.chapters;
 		var tbl_data = setRowData(listChapters, myGlobal.MAX_DISPLAY_ROW);
 		//header with search
 		var createCustomView = function() {

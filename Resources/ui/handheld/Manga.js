@@ -33,9 +33,31 @@ function Manga(item, tab) {
 			new Window(item);
 		});
 	};
-
+	var favoriteButton = Titanium.UI.createButton({
+		text: 'favorite', 
+		// backgroundImage:'/images/corkboard.jpg',
+		// width:50,
+		// height:20
+		color: '#fff',
+		height: 40,
+		width: 40,
+		backgroundColor: 'transparent',
+		backgroundImage: '/images/favorites_dark.png',
+	});
 	var self = Ti.UI.createWindow({
 		title: item.title,
+		rightNavButton: favoriteButton
+	});
+	favoriteButton.addEventListener('click', function() {
+		favoriteButton = Titanium.UI.createButton({
+			text: 'favorite', 
+			color: '#fff',
+			height: 40,
+			width: 40,
+			backgroundColor: 'transparent',
+			backgroundImage: '/images/favorites_color.png',
+		});
+		self.rightNavButton = favoriteButton;
 	});
 	//change top bar image
 	self.barImage = '/images/corkboard.jpg';

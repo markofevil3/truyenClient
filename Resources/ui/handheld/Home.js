@@ -6,9 +6,9 @@ function Home() {
 	// Create an array of explicitly defined custom TableViewRows
 	var tbl_data = [];
 	var homeMenus = [
-		{ 'id': 'MangaList', 'name': 'Manga', 'image': '/images/banner16.jpeg' },
-		{ 'id': 'BookList', 'name': 'Truyen Chu', 'image': '/images/banner16.jpeg' },
-		{ 'id': 'FunnyList', 'name': 'Truyen Cuoi', 'image': '/images/banner16.jpeg' },
+		{ 'id': 'MangaList', 'name': 'Manga', 'image': '/images/note2.png' },
+		{ 'id': 'BookList', 'name': 'Truyen Chu', 'image': '/images/note3.png' },
+		{ 'id': 'FunnyList', 'name': 'Truyen Cuoi', 'image': '/images/note2.png' },
 	];
 	for (var i = 0; i < homeMenus.length; i++) {
 		var row = Ti.UI.createTableViewRow({
@@ -20,8 +20,9 @@ function Home() {
 		});
 		var image = Ti.UI.createImageView({
 			image: homeMenus[i].image,
-			width: '70%',
-			height: '100%',
+			width: '100%',
+			// top: -5,
+			height: '85%',
 		});
 		row.add(image);
 		tbl_data.push(row);

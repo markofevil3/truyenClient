@@ -22,6 +22,8 @@ if (Ti.version < 1.8 ) {
 		Window = require('ui/handheld/ApplicationWindow');
 	}
 	Titanium.UI.iPhone.statusBarStyle = Titanium.UI.iPhone.StatusBar.OPAQUE_BLACK;
+	Titanium.Facebook.appid = "514307815249030";
+	Titanium.Facebook.permissions = ['publish_stream', 'read_stream'];
 	myGlobal = {};
 	Ti.include('etc/helpers.js');
 	var ApplicationTabGroup = require('ui/common/ApplicationTabGroup');

@@ -11,10 +11,10 @@
     <id>truyen</id>
     <name>truyen</name>
     <version>1.0</version>
-    <publisher>rongxanh2052004</publisher>
+    <publisher>Bui Phi Quan</publisher>
     <url>http://www.cokhithuyluc.com</url>
     <description>not specified</description>
-    <copyright>2012 by rongxanh2052004</copyright>
+    <copyright>2012 by Bui Phi Quan</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
@@ -25,6 +25,7 @@
     <analytics>true</analytics>
     <guid>3f7d7c53-31a3-4a4f-a25e-c7a0ed71bf2e</guid>
     <property name="ti.ui.defaultunit">system</property>
+    <property name="ti.facebook.appid">514307815249030</property >
     <iphone>
         <orientations device="iphone">
             <orientation>Ti.UI.PORTRAIT</orientation>

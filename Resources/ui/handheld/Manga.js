@@ -49,15 +49,27 @@ function Manga(item, tab) {
 		rightNavButton: favoriteButton
 	});
 	favoriteButton.addEventListener('click', function() {
-		favoriteButton = Titanium.UI.createButton({
-			text: 'favorite', 
-			color: '#fff',
-			height: 40,
-			width: 40,
-			backgroundColor: 'transparent',
-			backgroundImage: '/images/favorites_color.png',
+		// favoriteButton = Titanium.UI.createButton({
+			// text: 'favorite', 
+			// color: '#fff',
+			// height: 40,
+			// width: 40,
+			// backgroundColor: 'transparent',
+			// backgroundImage: '/images/favorites_color.png',
+		// });
+		// self.rightNavButton = favoriteButton;
+		Ti.Facebook.authorize();
+		// Titanium.Facebook.logout();
+		// console.log(Titanium.Facebook.loggedIn);
+		Titanium.Facebook.addEventListener('login', function(e) {
+	    if (e.success) {
+	        alert('Logged In');
+	    } else if (e.error) {
+	        alert(e.error);
+	    } else if (e.cancelled) {
+	        alert("Cancelled");
+	    }
 		});
-		self.rightNavButton = favoriteButton;
 	});
 	//change top bar image
 	self.barImage = '/images/corkboard.jpg';

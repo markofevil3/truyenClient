@@ -61,7 +61,6 @@ function MangaList(tab) {
 	},
 	function(response) {
 		listManga = JSON.parse(response).data;
-		Ti.API.info(JSON.stringify(listManga));
 		var tbl_data = setRowData(listManga);
 		//header with search
 		var createCustomView = function() {

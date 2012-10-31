@@ -123,6 +123,23 @@ myGlobal.dynamicLoad = function(tableView, data) {
 	});
 };
 
+myGlobal.addFavorite = function(itemId, itemType, user, callback) {
+	myGlobal.getAjax('/addFavorite', {
+		userId: user.id,
+		username: user.username,
+		fullName: user.name,
+		itemId: itemId,
+		itemType: itemType,
+	},
+	function(response) {
+		var data = JSON.parse(response).data;
+		console.log(data);
+		if (data == 'success') {
+			callback();
+		}
+	});
+};
+
 function isHash(obj) {
   return obj.constructor == Object;
 };

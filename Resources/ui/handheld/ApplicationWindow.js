@@ -8,7 +8,7 @@ function ApplicationWindow(title) {
 			Window = require('ui/handheld/Home');
 			break;
 		case 'Settings':
-			Window = require('ui/handheld/Home');
+			Window = require('ui/handheld/Setting');
 			break;
 	}
 	var self = new Window();

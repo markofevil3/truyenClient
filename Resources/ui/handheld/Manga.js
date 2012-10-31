@@ -36,51 +36,49 @@ function Manga(item, tab) {
 	var favoriteButton = Titanium.UI.createButton({
 		text: 'favorite', 
 		// backgroundImage:'/images/corkboard.jpg',
-		// width:50,
-		// height:20
+		color: '#fff',
+		height: 40,
+		width: 40,
+		itemId: item.id,
+		backgroundColor: 'transparent',
+		backgroundImage: '/images/favorites_dark.png',
+	});
+	favoritedButton = Titanium.UI.createButton({
+		text: 'favorite', 
 		color: '#fff',
 		height: 40,
 		width: 40,
 		backgroundColor: 'transparent',
-		backgroundImage: '/images/favorites_dark.png',
+		backgroundImage: '/images/favorites_color.png',
 	});
 	var self = Ti.UI.createWindow({
 		title: item.title,
 		rightNavButton: favoriteButton
 	});
+	//enable favorite button
 	favoriteButton.addEventListener('click', function() {
-		// favoriteButton = Titanium.UI.createButton({
-			// text: 'favorite', 
-			// color: '#fff',
-			// height: 40,
-			// width: 40,
-			// backgroundColor: 'transparent',
-			// backgroundImage: '/images/favorites_color.png',
-		// });
-		// self.rightNavButton = favoriteButton;
 		if (Titanium.Facebook.loggedIn == 0) {
 			Ti.Facebook.authorize();
 			Titanium.Facebook.addEventListener('login', function(e) {
 		    if (e.success) {
 		    	//add to favorite
-		    	console.log(e);
-		    	console.log(Titanium.Facebook.getUid());
-	        alert('Logged In');
+					myGlobal.addFavorite(favoriteButton.itemId, 0, e.data, function() {
+						self.rightNavButton = favoritedButton;
+					});
 		    } else if (e.error) {
 	        alert(e.error);
 		    } else if (e.cancelled) {
 	        alert("Cancelled");
 		    }
-		    Titanium.Facebook.removeEventListener('login');
 			});
 		} else {
 			Titanium.Facebook.requestWithGraphPath('/' + Titanium.Facebook.getUid(), {}, 'GET', function(user) {
-				console.log(JSON.parse(user.result));
+				// console.log(JSON.parse(user.result));
+				myGlobal.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
+					self.rightNavButton = favoritedButton;
+				});
 			});
-			//send request to add favorite
 		}
-		// Titanium.Facebook.logout();
-		// console.log(Titanium.Facebook.loggedIn);
 	});
 	//change top bar image
 	self.barImage = '/images/corkboard.jpg';
@@ -95,13 +93,19 @@ function Manga(item, tab) {
 		self.close();
 	});
 	self.leftNavButton = backbutton;
-	//end
-	
+	//send request to get manga info
 	myGlobal.getAjax('/manga', {
-		'id': item.id
+		'id': item.id,
+		'userId': Titanium.Facebook.getUid()
 	},
 	function(response) {
-		var listChapters = JSON.parse(response).data.chapters;
+		var json = JSON.parse(response);
+		if (json.favorite) {
+			self.rightNavButton = favoritedButton;
+		} else {
+			self.rightNavButton = favoriteButton; 
+		}
+		var listChapters = json.data.chapters;
 		var tbl_data = setRowData(listChapters, myGlobal.MAX_DISPLAY_ROW);
 		//header with search
 		var createCustomView = function() {
@@ -154,8 +158,6 @@ function Manga(item, tab) {
 			});
 			var optionsDialogOpts = {
 				options:['A -> Z', 'Z -> A'],
-				// destructive:1,
-				// cancel:2,
 				selectedIndex: 0,
 				title:'SORT BY'
 			};

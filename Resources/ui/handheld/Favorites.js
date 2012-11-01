@@ -3,6 +3,8 @@ function Favorites() {
 		title: 'Favorites',
 	});
 	var tableView = Ti.UI.createTableView({
+		editable:true,
+		allowsSelectionDuringEditing:true
 	});
 	function getFavorites() {
 		myGlobal.getAjax('/getFavorites', {
@@ -22,10 +24,33 @@ function Favorites() {
 				headerTitle: 'Funny'
 			});
 			for (var i = 0; i < listFavorites['manga'].length; i++) {
-				mangaSection.add(Ti.UI.createTableViewRow({
-					title: listFavorites['manga'][i].title,
+				var cover = Ti.UI.createImageView({
+					image: myGlobal.SERVER + listFavorites['manga'][i].cover,
+					width: 40,
+					height: 60,
+					left: 10,
+				});
+				var labelTitle = Ti.UI.createLabel({
+					text: listFavorites['manga'][i].title,
+					left: 55,
+					top: 5,
+					font: { fontWeight: 'bold', fontSize: 19 }
+				});
+				var labelChapter = Ti.UI.createLabel({
+					text: 'Newest: ' + listFavorites['manga'][i].chapters[listFavorites['manga'][i].chapters.length - 1].chapter,
+					left: 55,
+					top: 27,
+					font: { fontSize: 17 }
+				});
+				var row = Ti.UI.createTableViewRow({
+					// title: listFavorites['manga'][i].title,
 					itemId: listFavorites['manga'][i]._id,
-				}));
+					height: 70
+				});
+				row.add(labelTitle);
+				row.add(labelChapter);
+				row.add(cover);
+				mangaSection.add(row);
 			}
 	
 			tableView.data = [mangaSection, storySection, funnySection];
@@ -51,6 +76,16 @@ function Favorites() {
 		} else {
 			getFavorites();
 		}
+	});
+	tableView.addEventListener('delete', function(e) {
+		myGlobal.getAjax('/removeFavorite', {
+			'userId': Titanium.Facebook.getUid(),
+			'itemId': e.rowData.itemId
+		},
+		function(response) {
+			
+		});
+		// Titanium.API.info("deleted - row="+e.row+", index="+e.index+", section="+e.section + ' foo ' + e.rowData.itemId);
 	});
 	self.add(tableView);
 	return self;

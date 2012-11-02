@@ -6,7 +6,7 @@ function MangaList(tab) {
 			var row = Ti.UI.createTableViewRow({
 				height:120,
 				backgroundColor: 'transparent',
-				backgroundImage: '/images/handheld/bookShelf.png',
+				backgroundImage: '/images/tablet/bookShelf.png',
 				selectedBackgroundColor: 'transparent',
 				name: data[i].title,
 				chapter: data[i].chapter
@@ -33,7 +33,7 @@ function MangaList(tab) {
 	
 	function selectItem(item) {
 		item.addEventListener('click', function(e) {
-			var Window = require('ui/handheld/Manga');
+			var Window = require('ui/tablet/Manga');
 			new Window(item, tab);
 		});
 	};
@@ -42,11 +42,11 @@ function MangaList(tab) {
 	});
 	var listManga;
 	//change top bar image
-	self.barImage = '/images/handheld/corkboard.jpg';
+	self.barImage = '/images/tablet/corkboard.jpg';
 	//change back button style
 	var backbutton = Titanium.UI.createButton({
 		title:'back', 
-		// backgroundImage:'/images/handheld/corkboard.jpg',
+		// backgroundImage:'/images/tablet/corkboard.jpg',
 		width:50,
 		height:20
 	});
@@ -67,12 +67,12 @@ function MangaList(tab) {
 			var view = Ti.UI.createView({
 				backgroundColor: '#222',
 				height: 40,
-				backgroundImage: '/images/handheld/searchBackground.png',
+				backgroundImage: '/images/tablet/searchBackground.png',
 				backgroundColor: 'transparent',
 			});
 			var search = Titanium.UI.createSearchBar({
 				barColor:'transparent',
-				backgroundImage: '/images/handheld/search.png',
+				backgroundImage: '/images/tablet/search.png',
 				hintText:'search',
 				width: '70%',
 				left: 16
@@ -109,7 +109,7 @@ function MangaList(tab) {
 				width: 40,
 				right: 16,
 				backgroundColor: 'transparent',
-				backgroundImage: '/images/handheld/sort.png',
+				backgroundImage: '/images/tablet/sort.png',
 			});
 			var optionsDialogOpts = {
 				options:['A -> Z', 'Most View', 'Newest', 'Z -> A'],
@@ -148,7 +148,7 @@ function MangaList(tab) {
 		
 		var table = Titanium.UI.createTableView({
 	    data:tbl_data,
-	    backgroundImage: '/images/handheld/bookShelf.png',
+	    backgroundImage: '/images/tablet/bookShelf.png',
 	    separatorColor: 'transparent',
 	    headerView: createCustomView(),
 		});

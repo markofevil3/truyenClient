@@ -4,7 +4,7 @@ function Manga(item, tab) {
 		for (var i = 0; i < maxRow; i++) {
 			var row = Ti.UI.createTableViewRow({
 				backgroundColor: 'transparent',
-				// backgroundImage: '/images/handheld/bookShelf.png',
+				// backgroundImage: '/images/tablet/bookShelf.png',
 				// selectedBackgroundColor: 'transparent',
 				height: 40,
 				id: data[i]._id,
@@ -29,19 +29,19 @@ function Manga(item, tab) {
 	
 	function selectItem(item) {
 		item.addEventListener('click', function(e) {
-			var Window = require('ui/handheld/Reading');
+			var Window = require('ui/tablet/Reading');
 			new Window(item);
 		});
 	};
 	var favoriteButton = Titanium.UI.createButton({
 		text: 'favorite', 
-		// backgroundImage:'/images/handheld/corkboard.jpg',
+		// backgroundImage:'/images/tablet/corkboard.jpg',
 		color: '#fff',
 		height: 40,
 		width: 40,
 		itemId: item.id,
 		backgroundColor: 'transparent',
-		backgroundImage: '/images/handheld/favorites_dark.png',
+		backgroundImage: '/images/tablet/favorites_dark.png',
 	});
 	favoritedButton = Titanium.UI.createButton({
 		text: 'favorite', 
@@ -49,7 +49,7 @@ function Manga(item, tab) {
 		height: 40,
 		width: 40,
 		backgroundColor: 'transparent',
-		backgroundImage: '/images/handheld/favorites_color.png',
+		backgroundImage: '/images/tablet/favorites_color.png',
 	});
 	var self = Ti.UI.createWindow({
 		title: item.title,
@@ -81,11 +81,11 @@ function Manga(item, tab) {
 		}
 	});
 	//change top bar image
-	self.barImage = '/images/handheld/corkboard.jpg';
+	self.barImage = '/images/tablet/corkboard.jpg';
 	//change back button style
 	var backbutton = Titanium.UI.createButton({
 		title:'back', 
-		// backgroundImage:'/images/handheld/corkboard.jpg',
+		// backgroundImage:'/images/tablet/corkboard.jpg',
 		width:50,
 		height:20
 	});
@@ -112,13 +112,13 @@ function Manga(item, tab) {
 			var view = Ti.UI.createView({
 				backgroundColor: '#222',
 				height: 40,
-				backgroundImage: '/images/handheld/searchBackground.png',
+				backgroundImage: '/images/tablet/searchBackground.png',
 				backgroundColor: 'transparent',
 			});
 			var search = Titanium.UI.createSearchBar({
 				barColor:'transparent',
 				hintText:'search',
-				backgroundImage: '/images/handheld/search.png',
+				backgroundImage: '/images/tablet/search.png',
 				backgroundColor: 'transparent',
 				width: '70%',
 				left: 16
@@ -154,7 +154,7 @@ function Manga(item, tab) {
 				width: 40,
 				right: 16,
 				backgroundColor: 'transparent',
-				backgroundImage: '/images/handheld/sort.png',
+				backgroundImage: '/images/tablet/sort.png',
 			});
 			var optionsDialogOpts = {
 				options:['A -> Z', 'Z -> A'],
@@ -189,7 +189,7 @@ function Manga(item, tab) {
 		// Ti.API.info(JSON.stringify(tbl_data));
 		var table = Titanium.UI.createTableView({
 	    data: tbl_data,
-	    // backgroundImage: '/images/handheld/bookShelf.png',
+	    // backgroundImage: '/images/tablet/bookShelf.png',
 	    // separatorColor: 'transparent',
 	    headerView: createCustomView(),
 		});

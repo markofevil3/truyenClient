@@ -57,7 +57,7 @@ function Favorites() {
 		});
 	};
 	
-	self.barImage = '/images/handheld/corkboard.jpg';
+	self.barImage = '/images/tablet/corkboard.jpg';
 	var facebookButton = Titanium.Facebook.createLoginButton({
 		style: Ti.Facebook.BUTTON_STYLE_NORMAL,
 	});

@@ -4,7 +4,11 @@ function Favorites() {
 	});
 	var tableView = Ti.UI.createTableView({
 		editable:true,
-		allowsSelectionDuringEditing:true
+		allowsSelectionDuringEditing:true,
+		backgroundColor: 'transparent',
+		backgroundImage: '/images/handheld/bookShelf.png',
+		backgroundRepeat: true,
+		separatorColor: 'transparent',
 	});
 	function getFavorites() {
 		myGlobal.getAjax('/getFavorites', {
@@ -44,6 +48,8 @@ function Favorites() {
 				});
 				var row = Ti.UI.createTableViewRow({
 					// title: listFavorites['manga'][i].title,
+					backgroundColor: 'transparent',
+					backgroundImage: '/images/handheld/bookShelf.png',
 					itemId: listFavorites['manga'][i]._id,
 					height: 70
 				});
@@ -83,9 +89,7 @@ function Favorites() {
 			'itemId': e.rowData.itemId
 		},
 		function(response) {
-			
 		});
-		// Titanium.API.info("deleted - row="+e.row+", index="+e.index+", section="+e.section + ' foo ' + e.rowData.itemId);
 	});
 	self.add(tableView);
 	return self;

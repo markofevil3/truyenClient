@@ -1,46 +1,45 @@
-function MangaList(tab) {
+function StoryList(tab) {
 	
 	function setRowData(data) {
 		var dataSet = [];
-		for (var i = 0; i < Math.round(data.length / 3); i++) {
+		for (var i = 0; i < data.length; i++) {
 			var row = Ti.UI.createTableViewRow({
-				height:120,
-				backgroundColor: 'transparent',
-				backgroundImage: '/images/handheld/bookShelf.png',
-				selectedBackgroundColor: 'transparent',
+				height: 70,
+				// backgroundColor: 'transparent',
+				// backgroundImage: '/images/handheld/bookShelf.png',
+				// selectedBackgroundColor: 'transparent',
 				name: data[i].title,
-				chapter: data[i].chapter
+				itemId: data[i]._id
 			});
-			for (var j = 0; j < 3; j++) {
-				var index = (i * 3) + j;
-				if (data[index]) {
-					var image = Ti.UI.createImageView({
-						image: myGlobal.SERVER + data[index].cover,
-						width: '21%',
-						height: '70%',
-						left: 10 + (j * (21 + 8)) + '%',
-						title: data[index].title,
-						id: data[index]._id,
-					});
-					selectItem(image);
-					row.add(image);
-				}
-			}
+			var labelTitle = Ti.UI.createLabel({
+				text: data[i].title,
+				left: 10,
+				top: 5,
+				font: { fontWeight: 'bold', fontSize: 19 }
+			});
+			var labelAuthor = Ti.UI.createLabel({
+				top: 28,
+				left: 10,
+				text: 'Tác giả: ' + data[i].author,
+				font: { fontSize: 17, fontStyle: 'italic' }
+			});
+			row.add(labelTitle);
+			row.add(labelAuthor);
 			dataSet.push(row);
 		}
 		return dataSet;
 	};
 	
 	function selectItem(item) {
-		item.addEventListener('click', function(e) {
-			var Window = require('ui/handheld/Manga');
-			new Window(item, tab);
-		});
+		// item.addEventListener('click', function(e) {
+			// var Window = require('ui/handheld/Manga');
+			// new Window(item, tab);
+		// });
 	};
 	var self = Ti.UI.createWindow({
-		title: 'Manga',
+		title: 'Story',
 	});
-	var listManga;
+	var listStory;
 	//change top bar image
 	self.barImage = '/images/handheld/corkboard.jpg';
 	//change back button style
@@ -56,12 +55,12 @@ function MangaList(tab) {
 	self.leftNavButton = backbutton;
 	//end
 	
-	myGlobal.getAjax('/mangaList', {
+	myGlobal.getAjax('/storyList', {
 		'null': null
 	},
 	function(response) {
-		listManga = JSON.parse(response).data;
-		var tbl_data = setRowData(listManga);
+		listStory = JSON.parse(response).data;
+		var tbl_data = setRowData(listStory);
 		//header with search
 		var createCustomView = function() {
 			var view = Ti.UI.createView({
@@ -88,7 +87,6 @@ function MangaList(tab) {
 				tbl_data = setRowData(results);
 				table.setData([]);
 				table.setData(tbl_data);
-				// Ti.API.info(JSON.stringify(results));
 			});
 			search.addEventListener('focus', function(e) {
 				search.showCancel = true;
@@ -122,20 +120,20 @@ function MangaList(tab) {
 			dialog.addEventListener('click',function(e) {
 				switch (e.index) {
 					case 0:
-						listManga.sort(myGlobal.dynamicSort('title', 1));
+						listStory.sort(myGlobal.dynamicSort('title', 1));
 						break;
 					case 1:
-						listManga.sort(myGlobal.dynamicSort('numView', -1));
+						listStory.sort(myGlobal.dynamicSort('numView', -1));
 						break;
 					case 2:
-						listManga.sort(myGlobal.dynamicSort('datePost', -1));
+						listStory.sort(myGlobal.dynamicSort('datePost', -1));
 						break;
 					case 3:
-						listManga.sort(myGlobal.dynamicSort('title', -1));
+						listStory.sort(myGlobal.dynamicSort('title', -1));
 						break;
 				}
 				table.setData([]);
-				table.setData(setRowData(listManga));
+				table.setData(setRowData(listStory));
 			});
 			sortButton.addEventListener('singletap', function(e) {
 				dialog.show();
@@ -149,7 +147,7 @@ function MangaList(tab) {
 		var table = Titanium.UI.createTableView({
 	    data:tbl_data,
 	    backgroundImage: '/images/handheld/bookShelf.png',
-	    separatorColor: 'transparent',
+	    // separatorColor: 'transparent',
 	    headerView: createCustomView(),
 		});
 	
@@ -158,4 +156,4 @@ function MangaList(tab) {
 	});
 };
 
-module.exports = MangaList;
+module.exports = StoryList;

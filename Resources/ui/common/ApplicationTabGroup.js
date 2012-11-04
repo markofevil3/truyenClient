@@ -9,7 +9,7 @@ function ApplicationTabGroup(Window) {
 	
 	var homeTab = Ti.UI.createTab({
 		title: 'Home',
-		icon: '/images/KS_nav_ui.png',
+		icon: 'KS_nav_ui.png',
 		window: home
 	});
 	home.containingTab = homeTab;
@@ -23,7 +23,7 @@ function ApplicationTabGroup(Window) {
 	
 	var settingsTab = Ti.UI.createTab({
 		title: 'Settings',
-		icon: '/images/KS_nav_views.png',
+		icon: 'KS_nav_views.png',
 		window: settings
 	});
 	settingsTab.containingTab = settings;

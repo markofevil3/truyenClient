@@ -7,7 +7,7 @@ function Home() {
 	var tbl_data = [];
 	var homeMenus = [
 		{ 'id': 'MangaList', 'name': 'Manga', 'image': '/images/handheld/note2.png' },
-		{ 'id': 'BookList', 'name': 'Truyen Chu', 'image': '/images/handheld/note3.png' },
+		{ 'id': 'StoryList', 'name': 'Truyen Chu', 'image': '/images/handheld/note3.png' },
 		{ 'id': 'FunnyList', 'name': 'Truyen Cuoi', 'image': '/images/handheld/note2.png' },
 	];
 	for (var i = 0; i < homeMenus.length; i++) {

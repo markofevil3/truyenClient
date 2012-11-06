@@ -4,37 +4,52 @@ function StoryList(tab) {
 		var dataSet = [];
 		for (var i = 0; i < data.length; i++) {
 			var row = Ti.UI.createTableViewRow({
-				height: 70,
+				height: 100,
 				// backgroundColor: 'transparent',
 				// backgroundImage: '/images/handheld/bookShelf.png',
 				// selectedBackgroundColor: 'transparent',
 				name: data[i].title,
-				itemId: data[i]._id
+				itemId: data[i]._id,
+				type: data[i].type
+			});
+			var cover = Ti.UI.createImageView({
+				image: myGlobal.SERVER + '/images/story/sample/cover.jpg',
+				width: '22%',
+				height: '95%',
+				left: 0
 			});
 			var labelTitle = Ti.UI.createLabel({
 				text: data[i].title,
-				left: 10,
-				top: 5,
+				left: 70,
+				top: 3,
 				font: { fontWeight: 'bold', fontSize: 19 }
 			});
 			var labelAuthor = Ti.UI.createLabel({
-				top: 28,
-				left: 10,
+				top: 26,
+				left: 70,
 				text: 'Tác giả: ' + data[i].author,
 				font: { fontSize: 17, fontStyle: 'italic' }
 			});
+			row.add(cover);
 			row.add(labelTitle);
 			row.add(labelAuthor);
+			selectItem(row);
 			dataSet.push(row);
 		}
 		return dataSet;
 	};
 	
 	function selectItem(item) {
-		// item.addEventListener('click', function(e) {
-			// var Window = require('ui/handheld/Manga');
-			// new Window(item, tab);
-		// });
+		item.addEventListener('click', function(e) {
+			if (item.type == 0) {
+				var Window = require('ui/handheld/StoryReading');
+				new Window(item);
+			}
+			if (item.type == 1) {
+				var Window = require('ui/handheld/Story');
+				new Window(item, tab);
+			}
+		});
 	};
 	var self = Ti.UI.createWindow({
 		title: 'Story',

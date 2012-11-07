@@ -1,7 +1,7 @@
 function Story(item, tab) {
-	function setRowData(data, maxRow) {
+	function setRowData(data) {
 		var dataSet = [];
-		for (var i = 0; i < maxRow; i++) {
+		for (var i = 0; i < data.length; i++) {
 			var row = Ti.UI.createTableViewRow({
 				backgroundColor: 'transparent',
 				// backgroundImage: '/images/handheld/bookShelf.png',
@@ -11,7 +11,7 @@ function Story(item, tab) {
 				info: data[i]
 			});
 			var labelChapter = Ti.UI.createLabel({
-				text: data[i].chapter + ':',
+				text: 'Chapter ' + data[i].chapter + ':',
 				left:10,
 				font: { fontWeight: 'bold', fontSize: 17 }
 			});
@@ -39,7 +39,7 @@ function Story(item, tab) {
 		color: '#fff',
 		height: 40,
 		width: 40,
-		itemId: item.id,
+		itemId: item.itemId,
 		backgroundColor: 'transparent',
 		backgroundImage: '/images/handheld/favorites_dark.png',
 	});
@@ -52,7 +52,7 @@ function Story(item, tab) {
 		backgroundImage: '/images/handheld/favorites_color.png',
 	});
 	var self = Ti.UI.createWindow({
-		title: item.title,
+		title: item.name,
 		rightNavButton: favoriteButton
 	});
 	//enable favorite button
@@ -62,7 +62,7 @@ function Story(item, tab) {
 			Titanium.Facebook.addEventListener('login', function(e) {
 		    if (e.success) {
 		    	//add to favorite
-					myGlobal.addFavorite(favoriteButton.itemId, 0, e.data, function() {
+					myGlobal.addFavorite(favoriteButton.itemId, 1, e.data, function() {
 						self.rightNavButton = favoritedButton;
 					});
 		    } else if (e.error) {
@@ -74,7 +74,7 @@ function Story(item, tab) {
 		} else {
 			Titanium.Facebook.requestWithGraphPath('/' + Titanium.Facebook.getUid(), {}, 'GET', function(user) {
 				// console.log(JSON.parse(user.result));
-				myGlobal.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
+				myGlobal.addFavorite(favoriteButton.itemId, 1, JSON.parse(user.result), function() {
 					self.rightNavButton = favoritedButton;
 				});
 			});
@@ -100,14 +100,15 @@ function Story(item, tab) {
 	},
 	function(response) {
 		var json = JSON.parse(response);
-		Ti.API.info(JSON.stringify(json));
+		
 		if (json.favorite) {
 			self.rightNavButton = favoritedButton;
 		} else {
 			self.rightNavButton = favoriteButton; 
 		}
 		var listChapters = json.data.chapters;
-		var tbl_data = setRowData(listChapters, myGlobal.MAX_DISPLAY_ROW);
+		Ti.API.info(JSON.stringify(listChapters));
+		var tbl_data = setRowData(listChapters);
 		//header with search
 		var createCustomView = function() {
 			var view = Ti.UI.createView({
@@ -166,11 +167,10 @@ function Story(item, tab) {
 			dialog.addEventListener('click',function(e) {
 				switch (e.index) {
 					case 0:
-						listChapters.sort(myGlobal.dynamicSort('_id', 1));
-						Ti.API.info(JSON.stringify(listChapters));
+						listChapters.sort(myGlobal.dynamicSort('chapter', 1));
 						break;
 					case 1:
-						listChapters.sort(myGlobal.dynamicSort('_id', -1));
+						listChapters.sort(myGlobal.dynamicSort('chapter', -1));
 						break;
 				}
 				table.setData([]);
@@ -185,14 +185,49 @@ function Story(item, tab) {
 			view.add(search);
 			return view;
 		};
+		var infoView = Titanium.UI.createView({
+			width: '100%',
+			height: 120,
+			top: 0,
+			backgroundColor: '#fff'
+		});
+		var cover = Titanium.UI.createImageView({
+			image: myGlobal.SERVER + '/images/story/sample/cover.jpg',
+			width: '22%',
+			height: '100%',
+			left: 5
+		});
+		var labelTitle = Ti.UI.createLabel({
+			text: json.data.title,
+			left: '25%',
+			top: 2,
+			font: { fontWeight: 'bold', fontSize: 17 }
+		});
+		var labelAuthor = Ti.UI.createLabel({
+			top: 20,
+			left: '25%',
+			text: 'Tác giả: ' + json.data.author,
+			font: { fontSize: 15, fontStyle: 'italic' }
+		});
+		var labelDes = Ti.UI.createLabel({
+			top: 36,
+			left: '25%',
+			text: json.data.shortDes,
+			font: { fontSize: 14 }
+		});
+		infoView.add(cover);
+		infoView.add(labelTitle);
+		infoView.add(labelAuthor);
+		infoView.add(labelDes);
 		var table = Titanium.UI.createTableView({
 	    data: tbl_data,
 	    // backgroundImage: '/images/handheld/bookShelf.png',
 	    // separatorColor: 'transparent',
 	    headerView: createCustomView(),
+	    top: 120,
 		});
-		myGlobal.dynamicLoad(table, listChapters);
 		self.add(table);
+		self.add(infoView);
 		tab.containingTab.open(self);
 	});
 };

@@ -27,6 +27,7 @@ function Favorites() {
 			var funnySection = Ti.UI.createTableViewSection({
 				headerTitle: 'Funny'
 			});
+			//####### MANGA
 			for (var i = 0; i < listFavorites['manga'].length; i++) {
 				var cover = Ti.UI.createImageView({
 					image: myGlobal.SERVER + listFavorites['manga'][i].cover,
@@ -38,13 +39,15 @@ function Favorites() {
 					text: listFavorites['manga'][i].title,
 					left: 55,
 					top: 5,
-					font: { fontWeight: 'bold', fontSize: 19 }
+					font: { fontWeight: 'bold', fontSize: 19 },
+					color: '#fff'
 				});
 				var labelChapter = Ti.UI.createLabel({
 					text: 'Newest: ' + listFavorites['manga'][i].chapters[listFavorites['manga'][i].chapters.length - 1].chapter,
 					left: 55,
 					top: 27,
-					font: { fontSize: 17 }
+					font: { fontSize: 17 },
+					color: '#fff'
 				});
 				var row = Ti.UI.createTableViewRow({
 					// title: listFavorites['manga'][i].title,
@@ -58,6 +61,48 @@ function Favorites() {
 				row.add(cover);
 				mangaSection.add(row);
 			}
+			//##### STORY
+			for (var i = 0; i < listFavorites['story'].length; i++) {
+				var labelTitle = Ti.UI.createLabel({
+					text: listFavorites['story'][i].title,
+					left: 55,
+					top: 5,
+					font: { fontWeight: 'bold', fontSize: 19 },
+					color: '#fff'
+				});
+				if (listFavorites['story'][i].type == 0) {
+					var labelAuthor = Ti.UI.createLabel({
+						text: 'Tác giả: ' + listFavorites['story'][i].author,
+						left: 55,
+						top: 27,
+						font: { fontSize: 17 },
+						color: '#fff'
+					});
+				} else {
+					var labelChapter = Ti.UI.createLabel({
+						text: 'Newest: Chapter ' + listFavorites['story'][i].chapters[listFavorites['story'][i].chapters.length - 1].chapter,
+						left: 55,
+						top: 27,
+						font: { fontSize: 17 },
+						color: '#fff'
+					});
+				}
+				var row = Ti.UI.createTableViewRow({
+					backgroundColor: 'transparent',
+					backgroundImage: '/images/handheld/bookShelf.png',
+					itemId: listFavorites['story'][i]._id,
+					height: 70
+				});
+				row.add(labelTitle);
+				if (labelChapter) {
+					row.add(labelChapter);
+				}
+				if (labelAuthor) {
+					row.add(labelAuthor);
+				}
+				storySection.add(row);
+			}
+	
 	
 			tableView.data = [mangaSection, storySection, funnySection];
 		});

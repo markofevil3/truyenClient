@@ -7,8 +7,10 @@ function Story(item, tab) {
 				// backgroundImage: '/images/handheld/bookShelf.png',
 				// selectedBackgroundColor: 'transparent',
 				height: 40,
-				id: data[i]._id,
-				info: data[i]
+				itemId: item.itemId,
+				chapterId: data[i]._id,
+				info: data[i],
+				type: item.type
 			});
 			var labelChapter = Ti.UI.createLabel({
 				text: 'Chapter ' + data[i].chapter + ':',
@@ -29,7 +31,7 @@ function Story(item, tab) {
 	
 	function selectItem(item) {
 		item.addEventListener('click', function(e) {
-			var Window = require('ui/handheld/Reading');
+			var Window = require('ui/handheld/StoryReading');
 			new Window(item);
 		});
 	};
@@ -73,7 +75,6 @@ function Story(item, tab) {
 			});
 		} else {
 			Titanium.Facebook.requestWithGraphPath('/' + Titanium.Facebook.getUid(), {}, 'GET', function(user) {
-				// console.log(JSON.parse(user.result));
 				myGlobal.addFavorite(favoriteButton.itemId, 1, JSON.parse(user.result), function() {
 					self.rightNavButton = favoritedButton;
 				});
@@ -107,7 +108,6 @@ function Story(item, tab) {
 			self.rightNavButton = favoriteButton; 
 		}
 		var listChapters = json.data.chapters;
-		Ti.API.info(JSON.stringify(listChapters));
 		var tbl_data = setRowData(listChapters);
 		//header with search
 		var createCustomView = function() {

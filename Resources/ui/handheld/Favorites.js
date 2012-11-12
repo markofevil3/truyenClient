@@ -39,6 +39,7 @@ function Favorites() {
 					text: listFavorites['manga'][i].title,
 					left: 55,
 					top: 5,
+					height: 20,
 					font: { fontWeight: 'bold', fontSize: 19 },
 					color: '#fff'
 				});
@@ -67,6 +68,7 @@ function Favorites() {
 					text: listFavorites['story'][i].title,
 					left: 55,
 					top: 5,
+					height: 20,
 					font: { fontWeight: 'bold', fontSize: 19 },
 					color: '#fff'
 				});

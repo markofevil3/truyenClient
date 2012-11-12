@@ -101,7 +101,6 @@ function Story(item, tab) {
 	},
 	function(response) {
 		var json = JSON.parse(response);
-		
 		if (json.favorite) {
 			self.rightNavButton = favoritedButton;
 		} else {

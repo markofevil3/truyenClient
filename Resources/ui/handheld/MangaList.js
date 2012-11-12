@@ -16,13 +16,52 @@ function MangaList(tab) {
 				if (data[index]) {
 					var image = Ti.UI.createImageView({
 						image: myGlobal.SERVER + data[index].cover,
-						width: '21%',
-						height: '70%',
-						left: 10 + (j * (21 + 8)) + '%',
+						width: '18%',
+						height: '60%',
+						bottom: 13,
+						left: 12 + (j * (21 + 8)) + '%',
 						title: data[index].title,
 						id: data[index]._id,
+						zIndex: 2,
+					});
+					var nameTag = Ti.UI.createLabel({
+						text: data[index].title,
+						color: '#fff',
+						// backgroundImage: '/images/handheld/bg_paper_tournament.png',
+						height: 29,
+						width: 85,
+						font: { fontSize: 13, fontWeight: 'bold' },
+						textAlign: 'center',
+						top: 3,
+						horizontalWrap: true,
+						left: 8 + (j * (21 + 8)) + '%',
+						zIndex: 3,
+					});
+					var nameTagBackground = Ti.UI.createImageView({
+						image: '/images/handheld/bg_paper_tournament.png',
+						height: 40,
+						top: 0,
+						width: 90,
+						left: 7.5 + (j * (21 + 8)) + '%',
+						zIndex: 2
+					});
+					var shadow = Ti.UI.createView({
+						width: '18%',
+						height: '70%',
+						bottom: 10,
+						left: 13 + (j * (21 + 8)) + '%',
+						zIndex: 1,
+				    backgroundGradient: {
+			        type: 'linear',
+			        startPoint: { x: '50%', y: '100%' },
+			        endPoint: { x: '50%', y: '0%' },
+			        colors: [ { color: '#000', offset: 0.0}, { color: '#999999', offset: 1.0 } ],
+				    },
 					});
 					selectItem(image);
+					// row.add(shadow);
+					row.add(nameTagBackground);
+					row.add(nameTag);
 					row.add(image);
 				}
 			}

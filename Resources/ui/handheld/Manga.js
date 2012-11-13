@@ -2,27 +2,29 @@ function Manga(item, tab) {
 	function setRowData(data, maxRow) {
 		var dataSet = [];
 		for (var i = 0; i < maxRow; i++) {
-			var row = Ti.UI.createTableViewRow({
-				backgroundColor: 'transparent',
-				// backgroundImage: '/images/handheld/bookShelf.png',
-				// selectedBackgroundColor: 'transparent',
-				height: 40,
-				id: data[i]._id,
-				info: data[i]
-			});
-			var labelChapter = Ti.UI.createLabel({
-				text: data[i].chapter + ':',
-				left:10,
-				font: { fontWeight: 'bold', fontSize: 17 }
-			});
-			var labelTitle = Ti.UI.createLabel({
-				text: data[i].title,
-				left: 105
-			});
-			row.add(labelChapter);
-			row.add(labelTitle);
-			selectItem(row);
-			dataSet.push(row);
+			if (data[i]) {
+				var row = Ti.UI.createTableViewRow({
+					backgroundColor: 'transparent',
+					// backgroundImage: '/images/handheld/bookShelf.png',
+					// selectedBackgroundColor: 'transparent',
+					height: 40,
+					chapterId: data[i]._id,
+					id: item._id,
+				});
+				var labelChapter = Ti.UI.createLabel({
+					text: 'Chapter ' + data[i].chapter,
+					left:10,
+					font: { fontWeight: 'bold', fontSize: 17 }
+				});
+				var labelTitle = Ti.UI.createLabel({
+					text: data[i].title,
+					left: 105
+				});
+				row.add(labelTitle);
+				row.add(labelChapter);
+				selectItem(row);
+				dataSet.push(row);
+			}
 		}
 		return dataSet;
 	};

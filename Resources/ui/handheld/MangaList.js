@@ -9,13 +9,13 @@ function MangaList(tab) {
 				backgroundImage: '/images/handheld/bookShelf.png',
 				selectedBackgroundColor: 'transparent',
 				name: data[i].title,
-				chapter: data[i].chapter
+				// chapter: data[i].chapter
 			});
 			for (var j = 0; j < 3; j++) {
 				var index = (i * 3) + j;
 				if (data[index]) {
 					var image = Ti.UI.createImageView({
-						image: myGlobal.SERVER + data[index].cover,
+						image: myGlobal.SERVER + data[index].folder + '/cover.jpg',
 						width: '18%',
 						height: '60%',
 						bottom: 13,

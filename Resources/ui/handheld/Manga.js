@@ -108,6 +108,16 @@ function Manga(item, tab) {
 		}
 		var listChapters = json.data.chapters;
 		var tbl_data = setRowData(listChapters, myGlobal.MAX_DISPLAY_ROW);
+		
+		function getNewestChapter() {
+			var newest = 0;
+			for (var i = 0; i < listChapters.length; i++) {
+				if (listChapters[i].chapter > newest) {
+					newest = listChapters[i].chapter;
+				}
+			}
+			return newest;
+		}
 		//header with search
 		var createCustomView = function() {
 			var view = Ti.UI.createView({
@@ -115,6 +125,7 @@ function Manga(item, tab) {
 				height: 40,
 				backgroundImage: '/images/handheld/searchBackground.png',
 				backgroundColor: 'transparent',
+				top: 120,
 			});
 			var search = Titanium.UI.createSearchBar({
 				barColor:'transparent',
@@ -186,14 +197,56 @@ function Manga(item, tab) {
 			view.add(search);
 			return view;
 		};
-		// Ti.API.info(JSON.stringify(tbl_data));
 		var table = Titanium.UI.createTableView({
 	    data: tbl_data,
 	    // backgroundImage: '/images/handheld/bookShelf.png',
 	    // separatorColor: 'transparent',
-	    headerView: createCustomView(),
+	    // headerView: createCustomView(),
+	    top: 160,
 		});
 		myGlobal.dynamicLoad(table, listChapters);
+		
+		var infoView = Titanium.UI.createView({
+			width: '100%',
+			height: 120,
+			top: 0,
+			backgroundColor: '#fff'
+		});
+		var cover = Titanium.UI.createImageView({
+			image: myGlobal.SERVER + json.data.folder + '/cover.jpg',
+			width: '22%',
+			height: '100%',
+			left: 5
+		});
+		var labelTitle = Ti.UI.createLabel({
+			text: json.data.title,
+			left: '25%',
+			top: 2,
+			font: { fontWeight: 'bold', fontSize: 17 }
+		});
+		var labelAuthor = Ti.UI.createLabel({
+			top: 20,
+			left: '25%',
+			text: 'Tác giả: ' + json.data.author,
+			font: { fontSize: 15, fontStyle: 'italic' }
+		});
+		var labelChapter = Ti.UI.createLabel({
+			top: 36,
+			left: '25%',
+			text: 'Newest Chapter: ' + getNewestChapter(),
+			font: { fontSize: 15, fontStyle: 'bold' }
+		});
+		// var labelDes = Ti.UI.createLabel({
+			// top: 36,
+			// left: '25%',
+			// font: { fontSize: 14 }
+		// });
+		infoView.add(cover);
+		infoView.add(labelTitle);
+		infoView.add(labelAuthor);
+		infoView.add(labelChapter);
+		self.add(infoView);
+		self.add(createCustomView());
 		self.add(table);
 		tab.containingTab.open(self);
 	});

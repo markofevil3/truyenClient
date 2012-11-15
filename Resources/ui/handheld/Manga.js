@@ -9,7 +9,7 @@ function Manga(item, tab) {
 					// selectedBackgroundColor: 'transparent',
 					height: 40,
 					chapterId: data[i]._id,
-					id: item._id,
+					id: item.id,
 				});
 				var labelChapter = Ti.UI.createLabel({
 					text: 'Chapter ' + data[i].chapter,
@@ -75,7 +75,6 @@ function Manga(item, tab) {
 			});
 		} else {
 			Titanium.Facebook.requestWithGraphPath('/' + Titanium.Facebook.getUid(), {}, 'GET', function(user) {
-				// console.log(JSON.parse(user.result));
 				myGlobal.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
 					self.rightNavButton = favoritedButton;
 				});
@@ -168,7 +167,6 @@ function Manga(item, tab) {
 				switch (e.index) {
 					case 0:
 						listChapters.sort(myGlobal.dynamicSort('_id', 1));
-						Ti.API.info(JSON.stringify(listChapters));
 						break;
 					case 1:
 						listChapters.sort(myGlobal.dynamicSort('_id', -1));

@@ -108,6 +108,7 @@ function MangaList(tab) {
 				height: 40,
 				backgroundImage: '/images/handheld/searchBackground.png',
 				backgroundColor: 'transparent',
+				top: 0
 			});
 			var search = Titanium.UI.createSearchBar({
 				barColor:'transparent',
@@ -189,9 +190,10 @@ function MangaList(tab) {
 	    data:tbl_data,
 	    backgroundImage: '/images/handheld/bookShelf.png',
 	    separatorColor: 'transparent',
-	    headerView: createCustomView(),
+	    top: 40
+	    // headerView: createCustomView(),
 		});
-	
+		self.add(createCustomView());
 		self.add(table);
 		tab.containingTab.open(self);
 	});

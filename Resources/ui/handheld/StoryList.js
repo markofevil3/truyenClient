@@ -83,6 +83,7 @@ function StoryList(tab) {
 				height: 40,
 				backgroundImage: '/images/handheld/searchBackground.png',
 				backgroundColor: 'transparent',
+				top: 0
 			});
 			var search = Titanium.UI.createSearchBar({
 				barColor:'transparent',
@@ -162,10 +163,11 @@ function StoryList(tab) {
 		var table = Titanium.UI.createTableView({
 	    data:tbl_data,
 	    backgroundImage: '/images/handheld/bookShelf.png',
+	    top: 40
 	    // separatorColor: 'transparent',
-	    headerView: createCustomView(),
+	    // headerView: createCustomView(),
 		});
-	
+		self.add(createCustomView());
 		self.add(table);
 		tab.containingTab.open(self);
 	});

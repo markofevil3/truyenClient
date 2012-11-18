@@ -65,7 +65,7 @@ function StoryReading(item) {
 	topBar.add(buttonTextBig);
 	topBar.add(buttonTextSmall);
 	myGlobal.getAjax('/getStoryContent', {
-		'id': item.itemId,
+		'id': item.id,
 		'type': item.type,
 		'chapter': item.chapterId
 	},

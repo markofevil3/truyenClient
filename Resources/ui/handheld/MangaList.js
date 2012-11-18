@@ -1,5 +1,5 @@
 function MangaList(tab) {
-	
+	var MAX_DISPLAY_ROW = 10;
 	function setRowData(data) {
 		var dataSet = [];
 		for (var i = 0; i < Math.round(data.length / 3); i++) {
@@ -8,8 +8,6 @@ function MangaList(tab) {
 				backgroundColor: 'transparent',
 				backgroundImage: '/images/handheld/bookShelf.png',
 				selectedBackgroundColor: 'transparent',
-				name: data[i].title,
-				// chapter: data[i].chapter
 			});
 			for (var j = 0; j < 3; j++) {
 				var index = (i * 3) + j;
@@ -36,6 +34,8 @@ function MangaList(tab) {
 						horizontalWrap: true,
 						left: 8 + (j * (21 + 8)) + '%',
 						zIndex: 3,
+						title: data[index].title,
+						id: data[index]._id,
 					});
 					var nameTagBackground = Ti.UI.createImageView({
 						image: '/images/handheld/bg_paper_tournament.png',
@@ -59,6 +59,7 @@ function MangaList(tab) {
 				    },
 					});
 					selectItem(image);
+					selectItem(nameTag);
 					// row.add(shadow);
 					row.add(nameTagBackground);
 					row.add(nameTag);
@@ -100,8 +101,9 @@ function MangaList(tab) {
 	},
 	function(response) {
 		listManga = JSON.parse(response).data;
-		var tbl_data = setRowData(listManga);
+		var tbl_data = setRowData(listManga.slice(0, MAX_DISPLAY_ROW * 3));
 		//header with search
+		var search;
 		var createCustomView = function() {
 			var view = Ti.UI.createView({
 				backgroundColor: '#222',
@@ -110,7 +112,7 @@ function MangaList(tab) {
 				backgroundColor: 'transparent',
 				top: 0
 			});
-			var search = Titanium.UI.createSearchBar({
+			search = Titanium.UI.createSearchBar({
 				barColor:'transparent',
 				backgroundImage: '/images/handheld/search.png',
 				hintText:'search',
@@ -120,9 +122,9 @@ function MangaList(tab) {
 			search.addEventListener('change', function(e) {
 				var results = [];
 				var regexValue = new RegExp(myGlobal.removeUTF8(e.value), 'i');
-				for (var i in listStory) {
-					if (regexValue.test(myGlobal.removeUTF8(listStory[i].title))) {
-						results.push(listStory[i]);
+				for (var i in listManga) {
+					if (regexValue.test(myGlobal.removeUTF8(listManga[i].title))) {
+						results.push(listManga[i]);
 					}
 				}
 				tbl_data = setRowData(results);
@@ -175,7 +177,7 @@ function MangaList(tab) {
 						break;
 				}
 				table.setData([]);
-				table.setData(setRowData(listManga));
+				table.setData(setRowData(listManga.slice(0, MAX_DISPLAY_ROW * 3)));
 			});
 			sortButton.addEventListener('singletap', function(e) {
 				dialog.show();
@@ -191,8 +193,67 @@ function MangaList(tab) {
 	    backgroundImage: '/images/handheld/bookShelf.png',
 	    separatorColor: 'transparent',
 	    top: 40
-	    // headerView: createCustomView(),
 		});
+		
+		function dynamicLoad(tableView, data) {
+			var loadingIcon = Titanium.UI.createActivityIndicator({
+				style:Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
+			});
+			var loadingView = Titanium.UI.createView({
+				backgroundColor: 'transparent',
+				backgroundImage: 'NONE'
+			});
+			loadingView.add(loadingIcon);
+			var loadingRow = Ti.UI.createTableViewRow({
+				height: 40,
+				backgroundColor: 'transparent',
+				backgroundImage: 'NONE'
+			});
+			loadingRow.add(loadingView);
+			var lastRowIndex = tableView.data[0].rowCount;
+			var updating = false;
+			
+			function beginUpdate() {
+				updating = true;
+				tableView.appendRow(loadingRow);
+				loadingIcon.show();
+				setTimeout(endUpdate, 500);
+			};
+			function endUpdate() {
+				updating = false;
+				loadingIcon.hide();
+				tableView.deleteRow(lastRowIndex - 1, { animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE });
+				var nextRowIndex = lastRowIndex - 1 + MAX_DISPLAY_ROW;
+				if (nextRowIndex > Math.round(data.length / 3)) {
+					nextRowIndex = Math.round(data.length / 3);
+				}
+				var nextRowIndexs = data.slice((lastRowIndex - 1) * 3, nextRowIndex * 3);
+				var nextRows = setRowData(nextRowIndexs);
+				for (var i = 0; i < nextRows.length; i ++) {
+					tableView.appendRow(nextRows[i], { animationStyle:Titanium.UI.iPhone.RowAnimationStyle.NONE });
+				}
+				lastRowIndex += MAX_DISPLAY_ROW;
+				tableView.scrollToIndex(lastRowIndex - MAX_DISPLAY_ROW,{animated:true,position:Ti.UI.iPhone.TableViewScrollPosition.BOTTOM});
+			};
+			var lastDistance = 0;
+			tableView.addEventListener('scroll',function(e) {
+				lastRowIndex = tableView.data[0].rowCount;
+				var offset = e.contentOffset.y;
+				var height = e.size.height;
+				var total = offset + height;
+				var theEnd = e.contentSize.height;
+				var distance = theEnd - total;
+			
+				if (distance < lastDistance) {
+					var nearEnd = theEnd * 1;
+					if (!updating && (total >= nearEnd) && lastRowIndex < Math.round(data.length / 3) && lastRowIndex >= MAX_DISPLAY_ROW && search.value == null) {
+						beginUpdate();
+					}
+				}
+				lastDistance = distance;
+			});
+		};
+		dynamicLoad(table, listManga);
 		self.add(createCustomView());
 		self.add(table);
 		tab.containingTab.open(self);

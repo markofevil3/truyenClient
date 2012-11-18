@@ -16,7 +16,6 @@ function Favorites() {
 		},
 		function(response) {
 			var listFavorites = JSON.parse(response).data;
-			console.log(listFavorites);
 			
 			var mangaSection = Ti.UI.createTableViewSection({
 				headerTitle: 'Manga'
@@ -30,7 +29,7 @@ function Favorites() {
 			//####### MANGA
 			for (var i = 0; i < listFavorites['manga'].length; i++) {
 				var cover = Ti.UI.createImageView({
-					image: myGlobal.SERVER + listFavorites['manga'][i].cover,
+					image: myGlobal.SERVER + listFavorites['manga'][i].folder + '/cover.jpg',
 					width: 40,
 					height: 60,
 					left: 10,

@@ -7,7 +7,7 @@ function Story(item, tab) {
 				// backgroundImage: '/images/handheld/bookShelf.png',
 				// selectedBackgroundColor: 'transparent',
 				height: 40,
-				itemId: item.itemId,
+				id: item.itemId,
 				chapterId: data[i]._id,
 				info: data[i],
 				type: item.type

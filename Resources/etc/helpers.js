@@ -1,7 +1,7 @@
 (function(){
 
 myGlobal.SERVER = 'http://localhost:3000';
-myGlobal.MAX_DISPLAY_ROW = 10;
+myGlobal.MAX_DISPLAY_ROW = 40;
 
 myGlobal.getAjax = function(url, query, callback) {
 	var xhr = Ti.Network.createHTTPClient({
@@ -57,7 +57,6 @@ myGlobal.dynamicLoad = function(tableView, data) {
 	
 	function beginUpdate() {
 		updating = true;
-		
 		tableView.appendRow(loadingRow);
 		loadingIcon.show();
 		setTimeout(endUpdate, 500);
@@ -86,7 +85,7 @@ myGlobal.dynamicLoad = function(tableView, data) {
 				info: data[i]
 			});
 			var labelChapter = Ti.UI.createLabel({
-				text: data[i].chapter + ':',
+				text: 'Chapter ' + data[i].chapter,
 				left:10,
 				font: { fontWeight: 'bold', fontSize: 17 }
 			});
@@ -113,9 +112,9 @@ myGlobal.dynamicLoad = function(tableView, data) {
 	
 		if (distance < lastDistance) {
 			var nearEnd = theEnd * 1;
-			if (!updating && (total >= nearEnd) && lastRowIndex < data.length && tableView.data[0].rows[0].id == data[0]._id 
-			&& tableView.data[0].rows[1].id == data[1]._id
-			&& tableView.data[0].rows[lastRowIndex - 1].id != data[data.length -1]._id && lastRowIndex >= myGlobal.MAX_DISPLAY_ROW) {
+			if (!updating && (total >= nearEnd) && lastRowIndex < data.length && tableView.data[0].rows[0].chapterId == data[0]._id 
+			&& tableView.data[0].rows[1].chapterId == data[1]._id
+			&& tableView.data[0].rows[lastRowIndex - 1].chapterId != data[data.length -1]._id && lastRowIndex >= myGlobal.MAX_DISPLAY_ROW) {
 				beginUpdate();
 			}
 		}

@@ -177,10 +177,10 @@ function Manga(item, tab) {
 			dialog.addEventListener('click',function(e) {
 				switch (e.index) {
 					case 0:
-						listChapters.sort(myGlobal.dynamicSort('_id', 1));
+						listChapters.sort(myGlobal.dynamicSort('chapter', 1));
 						break;
 					case 1:
-						listChapters.sort(myGlobal.dynamicSort('_id', -1));
+						listChapters.sort(myGlobal.dynamicSort('chapter', -1));
 						break;
 				}
 				table.setData([]);
@@ -222,19 +222,32 @@ function Manga(item, tab) {
 			text: json.data.title,
 			left: '25%',
 			top: 2,
-			font: { fontWeight: 'bold', fontSize: 17 }
+			font: { fontWeight: 'bold', fontSize: 19 }
 		});
 		var labelAuthor = Ti.UI.createLabel({
-			top: 20,
+			top: 25,
 			left: '25%',
 			text: 'Tác giả: ' + json.data.author,
-			font: { fontSize: 15, fontStyle: 'italic' }
+			font: { fontSize: 16, fontStyle: 'italic' }
 		});
 		var labelChapter = Ti.UI.createLabel({
-			top: 36,
+			top: 44,
 			left: '25%',
 			text: 'Newest Chapter: ' + getNewestChapter(),
-			font: { fontSize: 15, fontStyle: 'bold' }
+			font: { fontSize: 18, fontStyle: 'bold' }
+		});
+		var labelView = Ti.UI.createLabel({
+			top: 65,
+			left: '33%',
+			text: json.data.numView,
+			font: { fontSize: 18, fontStyle: 'bold' }
+		});
+		var viewIcon = Ti.UI.createImageView({
+			image: '/images/handheld/view.png',
+			top: 65,
+			left: '25%',
+			width: 20,
+			height: 20
 		});
 		// var labelDes = Ti.UI.createLabel({
 			// top: 36,
@@ -245,6 +258,8 @@ function Manga(item, tab) {
 		infoView.add(labelTitle);
 		infoView.add(labelAuthor);
 		infoView.add(labelChapter);
+		infoView.add(viewIcon);
+		infoView.add(labelView);
 		self.add(infoView);
 		self.add(createCustomView());
 		self.add(table);

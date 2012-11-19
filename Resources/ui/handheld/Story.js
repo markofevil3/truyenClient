@@ -7,7 +7,7 @@ function Story(item, tab) {
 				// backgroundImage: '/images/handheld/bookShelf.png',
 				// selectedBackgroundColor: 'transparent',
 				height: 40,
-				id: item.itemId,
+				id: item.id,
 				chapterId: data[i]._id,
 				info: data[i],
 				type: item.type
@@ -41,7 +41,7 @@ function Story(item, tab) {
 		color: '#fff',
 		height: 40,
 		width: 40,
-		itemId: item.itemId,
+		itemId: item.id,
 		backgroundColor: 'transparent',
 		backgroundImage: '/images/handheld/favorites_dark.png',
 	});
@@ -96,7 +96,7 @@ function Story(item, tab) {
 	self.leftNavButton = backbutton;
 	//send request to get manga info
 	myGlobal.getAjax('/getStory', {
-		'id': item.itemId,
+		'id': item.id,
 		'userId': Titanium.Facebook.getUid()
 	},
 	function(response) {

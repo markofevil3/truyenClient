@@ -4,10 +4,6 @@ function Setting() {
 		backgroundColor: '#fff'
 	});
 	self.barImage = '/images/handheld/corkboard.jpg';
-	var facebookButton = Titanium.Facebook.createLoginButton({
-		style: Ti.Facebook.BUTTON_STYLE_NORMAL,
-	})
-	// self.add(facebookButton);
 	var webview = Titanium.UI.createWebView({
 		url: myGlobal.SERVER + '/facebook',
 		width: '100%',
@@ -16,18 +12,39 @@ function Setting() {
 	});
 	var tbl_data = [];
 	
-	var askForBook = Ti.UI.createTableViewRow({
+	var support = Ti.UI.createTableViewRow({
 		height: 40,
-		id: 0,
+		id: 'Support',
 		hasChild: true,
-		title: 'Helps/Ask For Book!'
+		title: 'Yêu Cầu Truyện',
+		font: { fontWeight: 'bold', fontSize: 14 },
 	});
-	tbl_data.push(askForBook);
+	var aboutUs = Ti.UI.createTableViewRow({
+		height: 40,
+		id: 'AboutUs',
+		hasChild: true,
+		title: 'Giới Thiệu',
+		font: { fontWeight: 'bold', fontSize: 14 },
+	});
+	var account = Ti.UI.createTableViewRow({
+		height: 40,
+		id: 'Account',
+		hasChild: true,
+		title: 'Tài Khoản',
+		font: { fontWeight: 'bold', fontSize: 14 },
+	});
+	tbl_data.push(account);
+	tbl_data.push(support);
+	tbl_data.push(aboutUs);
 	var table = Titanium.UI.createTableView({
     data: tbl_data,
     height: 'auto',
-    scrollable: false
+    scrollable: false,
     // backgroundImage: '/images/handheld/bookShelf.png',
+	});
+	table.addEventListener('click', function(e) {
+		var Window = require('ui/handheld/' + e.rowData.id);
+		new Window(self);
 	});
 	self.add(table);
 	self.add(webview);

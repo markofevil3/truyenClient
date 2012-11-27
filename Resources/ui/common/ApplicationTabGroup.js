@@ -26,7 +26,7 @@ function ApplicationTabGroup(Window) {
 		icon: 'KS_nav_views.png',
 		window: settings
 	});
-	settingsTab.containingTab = settings;
+	settings.containingTab = settingsTab;
 	
 	self.addTab(homeTab);
 	self.addTab(favoritesTab);

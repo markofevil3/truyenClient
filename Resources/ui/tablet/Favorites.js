@@ -4,7 +4,11 @@ function Favorites() {
 	});
 	var tableView = Ti.UI.createTableView({
 		editable:true,
-		allowsSelectionDuringEditing:true
+		allowsSelectionDuringEditing:true,
+		backgroundColor: 'transparent',
+		backgroundImage: '/images/handheld/bookShelf.png',
+		backgroundRepeat: true,
+		separatorColor: 'transparent',
 	});
 	function getFavorites() {
 		myGlobal.getAjax('/getFavorites', {
@@ -12,7 +16,6 @@ function Favorites() {
 		},
 		function(response) {
 			var listFavorites = JSON.parse(response).data;
-			console.log(listFavorites);
 			
 			var mangaSection = Ti.UI.createTableViewSection({
 				headerTitle: 'Manga'
@@ -23,9 +26,10 @@ function Favorites() {
 			var funnySection = Ti.UI.createTableViewSection({
 				headerTitle: 'Funny'
 			});
+			//####### MANGA
 			for (var i = 0; i < listFavorites['manga'].length; i++) {
 				var cover = Ti.UI.createImageView({
-					image: myGlobal.SERVER + listFavorites['manga'][i].cover,
+					image: myGlobal.SERVER + listFavorites['manga'][i].folder + '/cover.jpg',
 					width: 40,
 					height: 60,
 					left: 10,
@@ -34,16 +38,21 @@ function Favorites() {
 					text: listFavorites['manga'][i].title,
 					left: 55,
 					top: 5,
-					font: { fontWeight: 'bold', fontSize: 19 }
+					height: 20,
+					font: { fontWeight: 'bold', fontSize: 19 },
+					color: '#fff'
 				});
 				var labelChapter = Ti.UI.createLabel({
 					text: 'Newest: ' + listFavorites['manga'][i].chapters[listFavorites['manga'][i].chapters.length - 1].chapter,
 					left: 55,
 					top: 27,
-					font: { fontSize: 17 }
+					font: { fontSize: 17 },
+					color: '#fff'
 				});
 				var row = Ti.UI.createTableViewRow({
 					// title: listFavorites['manga'][i].title,
+					backgroundColor: 'transparent',
+					backgroundImage: '/images/handheld/bookShelf.png',
 					itemId: listFavorites['manga'][i]._id,
 					height: 70
 				});
@@ -52,12 +61,55 @@ function Favorites() {
 				row.add(cover);
 				mangaSection.add(row);
 			}
+			//##### STORY
+			for (var i = 0; i < listFavorites['story'].length; i++) {
+				var labelTitle = Ti.UI.createLabel({
+					text: listFavorites['story'][i].title,
+					left: 55,
+					top: 5,
+					height: 20,
+					font: { fontWeight: 'bold', fontSize: 19 },
+					color: '#fff'
+				});
+				if (listFavorites['story'][i].type == 0) {
+					var labelAuthor = Ti.UI.createLabel({
+						text: 'Tác giả: ' + listFavorites['story'][i].author,
+						left: 55,
+						top: 27,
+						font: { fontSize: 17 },
+						color: '#fff'
+					});
+				} else {
+					var labelChapter = Ti.UI.createLabel({
+						text: 'Newest: Chapter ' + listFavorites['story'][i].chapters[listFavorites['story'][i].chapters.length - 1].chapter,
+						left: 55,
+						top: 27,
+						font: { fontSize: 17 },
+						color: '#fff'
+					});
+				}
+				var row = Ti.UI.createTableViewRow({
+					backgroundColor: 'transparent',
+					backgroundImage: '/images/handheld/bookShelf.png',
+					itemId: listFavorites['story'][i]._id,
+					height: 70
+				});
+				row.add(labelTitle);
+				if (labelChapter) {
+					row.add(labelChapter);
+				}
+				if (labelAuthor) {
+					row.add(labelAuthor);
+				}
+				storySection.add(row);
+			}
+	
 	
 			tableView.data = [mangaSection, storySection, funnySection];
 		});
 	};
 	
-	self.barImage = '/images/tablet/corkboard.jpg';
+	self.barImage = '/images/handheld/corkboard.jpg';
 	var facebookButton = Titanium.Facebook.createLoginButton({
 		style: Ti.Facebook.BUTTON_STYLE_NORMAL,
 	});
@@ -83,9 +135,7 @@ function Favorites() {
 			'itemId': e.rowData.itemId
 		},
 		function(response) {
-			
 		});
-		// Titanium.API.info("deleted - row="+e.row+", index="+e.index+", section="+e.section + ' foo ' + e.rowData.itemId);
 	});
 	self.add(tableView);
 	return self;

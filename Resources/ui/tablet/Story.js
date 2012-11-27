@@ -1,37 +1,37 @@
-function Manga(item, tab) {
-	function setRowData(data, maxRow) {
+function Story(item, tab) {
+	function setRowData(data) {
 		var dataSet = [];
-		for (var i = 0; i < maxRow; i++) {
-			if (data[i]) {
-				var row = Ti.UI.createTableViewRow({
-					backgroundColor: 'transparent',
-					// backgroundImage: '/images/handheld/bookShelf.png',
-					// selectedBackgroundColor: 'transparent',
-					height: 40,
-					chapterId: data[i]._id,
-					id: item.id,
-				});
-				var labelChapter = Ti.UI.createLabel({
-					text: 'Chapter ' + data[i].chapter,
-					left:10,
-					font: { fontWeight: 'bold', fontSize: 17 }
-				});
-				var labelTitle = Ti.UI.createLabel({
-					text: data[i].title,
-					left: 105
-				});
-				row.add(labelTitle);
-				row.add(labelChapter);
-				selectItem(row);
-				dataSet.push(row);
-			}
+		for (var i = 0; i < data.length; i++) {
+			var row = Ti.UI.createTableViewRow({
+				backgroundColor: 'transparent',
+				// backgroundImage: '/images/handheld/bookShelf.png',
+				// selectedBackgroundColor: 'transparent',
+				height: 40,
+				id: item.id,
+				chapterId: data[i]._id,
+				info: data[i],
+				type: item.type
+			});
+			var labelChapter = Ti.UI.createLabel({
+				text: 'Chapter ' + data[i].chapter + ':',
+				left:10,
+				font: { fontWeight: 'bold', fontSize: 17 }
+			});
+			var labelTitle = Ti.UI.createLabel({
+				text: data[i].title,
+				left: 105
+			});
+			row.add(labelChapter);
+			row.add(labelTitle);
+			selectItem(row);
+			dataSet.push(row);
 		}
 		return dataSet;
 	};
 	
 	function selectItem(item) {
 		item.addEventListener('click', function(e) {
-			var Window = require('ui/tablet/Reading');
+			var Window = require('ui/tablet/StoryReading');
 			new Window(item);
 		});
 	};
@@ -54,7 +54,7 @@ function Manga(item, tab) {
 		backgroundImage: '/images/handheld/favorites_color.png',
 	});
 	var self = Ti.UI.createWindow({
-		title: item.title,
+		title: item.name,
 		rightNavButton: favoriteButton
 	});
 	//enable favorite button
@@ -64,7 +64,7 @@ function Manga(item, tab) {
 			Titanium.Facebook.addEventListener('login', function(e) {
 		    if (e.success) {
 		    	//add to favorite
-					myGlobal.addFavorite(favoriteButton.itemId, 0, e.data, function() {
+					myGlobal.addFavorite(favoriteButton.itemId, 1, e.data, function() {
 						self.rightNavButton = favoritedButton;
 					});
 		    } else if (e.error) {
@@ -75,7 +75,7 @@ function Manga(item, tab) {
 			});
 		} else {
 			Titanium.Facebook.requestWithGraphPath('/' + Titanium.Facebook.getUid(), {}, 'GET', function(user) {
-				myGlobal.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
+				myGlobal.addFavorite(favoriteButton.itemId, 1, JSON.parse(user.result), function() {
 					self.rightNavButton = favoritedButton;
 				});
 			});
@@ -95,7 +95,7 @@ function Manga(item, tab) {
 	});
 	self.leftNavButton = backbutton;
 	//send request to get manga info
-	myGlobal.getAjax('/manga', {
+	myGlobal.getAjax('/getStory', {
 		'id': item.id,
 		'userId': Titanium.Facebook.getUid()
 	},
@@ -107,17 +107,7 @@ function Manga(item, tab) {
 			self.rightNavButton = favoriteButton; 
 		}
 		var listChapters = json.data.chapters;
-		var tbl_data = setRowData(listChapters, myGlobal.MAX_DISPLAY_ROW);
-		
-		function getNewestChapter() {
-			var newest = 0;
-			for (var i = 0; i < listChapters.length; i++) {
-				if (listChapters[i].chapter > newest) {
-					newest = listChapters[i].chapter;
-				}
-			}
-			return newest;
-		}
+		var tbl_data = setRowData(listChapters);
 		//header with search
 		var createCustomView = function() {
 			var view = Ti.UI.createView({
@@ -125,7 +115,7 @@ function Manga(item, tab) {
 				height: 40,
 				backgroundImage: '/images/handheld/searchBackground.png',
 				backgroundColor: 'transparent',
-				top: 120,
+				top: 120
 			});
 			var search = Titanium.UI.createSearchBar({
 				barColor:'transparent',
@@ -186,8 +176,6 @@ function Manga(item, tab) {
 				table.setData([]);
 				tbl_data = setRowData(listChapters, myGlobal.MAX_DISPLAY_ROW);
 				table.setData(tbl_data);
-				// myGlobal.dynamicLoad(table, listChapters);
-				// table.setData(setRowData(listChapters));
 			});
 			sortButton.addEventListener('singletap', function(e) {
 				dialog.show();
@@ -197,15 +185,6 @@ function Manga(item, tab) {
 			view.add(search);
 			return view;
 		};
-		var table = Titanium.UI.createTableView({
-	    data: tbl_data,
-	    // backgroundImage: '/images/handheld/bookShelf.png',
-	    // separatorColor: 'transparent',
-	    // headerView: createCustomView(),
-	    top: 160,
-		});
-		myGlobal.dynamicLoad(table, listChapters);
-		
 		var infoView = Titanium.UI.createView({
 			width: '100%',
 			height: 120,
@@ -213,7 +192,7 @@ function Manga(item, tab) {
 			backgroundColor: '#fff'
 		});
 		var cover = Titanium.UI.createImageView({
-			image: myGlobal.SERVER + json.data.folder + '/cover.jpg',
+			image: myGlobal.SERVER + '/images/story/sample/cover.jpg',
 			width: '22%',
 			height: '100%',
 			left: 5
@@ -222,49 +201,36 @@ function Manga(item, tab) {
 			text: json.data.title,
 			left: '25%',
 			top: 2,
-			font: { fontWeight: 'bold', fontSize: 19 }
+			font: { fontWeight: 'bold', fontSize: 17 }
 		});
 		var labelAuthor = Ti.UI.createLabel({
-			top: 25,
+			top: 20,
 			left: '25%',
 			text: 'Tác giả: ' + json.data.author,
-			font: { fontSize: 16, fontStyle: 'italic' }
+			font: { fontSize: 15, fontStyle: 'italic' }
 		});
-		var labelChapter = Ti.UI.createLabel({
-			top: 44,
+		var labelDes = Ti.UI.createLabel({
+			top: 36,
 			left: '25%',
-			text: 'Newest Chapter: ' + getNewestChapter(),
-			font: { fontSize: 18, fontStyle: 'bold' }
+			text: json.data.shortDes,
+			font: { fontSize: 14 }
 		});
-		var labelView = Ti.UI.createLabel({
-			top: 65,
-			left: '33%',
-			text: json.data.numView,
-			font: { fontSize: 18, fontStyle: 'bold' }
-		});
-		var viewIcon = Ti.UI.createImageView({
-			image: '/images/handheld/view.png',
-			top: 65,
-			left: '25%',
-			width: 20,
-			height: 20
-		});
-		// var labelDes = Ti.UI.createLabel({
-			// top: 36,
-			// left: '25%',
-			// font: { fontSize: 14 }
-		// });
 		infoView.add(cover);
 		infoView.add(labelTitle);
 		infoView.add(labelAuthor);
-		infoView.add(labelChapter);
-		infoView.add(viewIcon);
-		infoView.add(labelView);
+		infoView.add(labelDes);
+		var table = Titanium.UI.createTableView({
+	    data: tbl_data,
+	    // backgroundImage: '/images/handheld/bookShelf.png',
+	    // separatorColor: 'transparent',
+	    // headerView: createCustomView(),
+	    top: 160,
+		});
+		self.add(table);
 		self.add(infoView);
 		self.add(createCustomView());
-		self.add(table);
 		tab.containingTab.open(self);
 	});
 };
 
-module.exports = Manga;
+module.exports = Story;

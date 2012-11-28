@@ -243,7 +243,6 @@ function MangaList(tab) {
 				var total = offset + height;
 				var theEnd = e.contentSize.height;
 				var distance = theEnd - total;
-				console.log('b');
 				if (distance < lastDistance) {
 					var nearEnd = theEnd * 1;
 					if (!updating && (total >= nearEnd) && lastRowIndex < Math.round(data.length / 3) && lastRowIndex >= MAX_DISPLAY_ROW && (search.value == null || search.value == '')) {

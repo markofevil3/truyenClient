@@ -210,7 +210,8 @@ function Manga(item, tab) {
 			width: '100%',
 			height: 120,
 			top: 0,
-			backgroundColor: '#fff'
+			backgroundColor: '#fff',
+			layout: 'horizontal'
 		});
 		var cover = Titanium.UI.createImageView({
 			image: myGlobal.SERVER + json.data.folder + '/cover.jpg',
@@ -218,48 +219,53 @@ function Manga(item, tab) {
 			height: '100%',
 			left: 5
 		});
+		var details = Titanium.UI.createView({
+			width: '72%',
+			height: '100%',
+			backgroundColor: '#fff',
+			layout: 'vertical',
+			left: 5
+		});
 		var labelTitle = Ti.UI.createLabel({
 			text: json.data.title,
-			left: '25%',
-			top: 2,
-			font: { fontWeight: 'bold', fontSize: 19 }
+			font: { fontWeight: 'bold', fontSize: 19 },
+			left: 0
 		});
 		var labelAuthor = Ti.UI.createLabel({
-			top: 25,
-			left: '25%',
 			text: 'Tác giả: ' + json.data.author,
-			font: { fontSize: 16, fontStyle: 'italic' }
+			font: { fontSize: 16, fontStyle: 'italic' },
+			left: 0
 		});
 		var labelChapter = Ti.UI.createLabel({
-			top: 44,
-			left: '25%',
 			text: 'Newest Chapter: ' + getNewestChapter(),
-			font: { fontSize: 18, fontStyle: 'bold' }
+			font: { fontSize: 18, fontStyle: 'bold' },
+			left: 0
 		});
 		var labelView = Ti.UI.createLabel({
-			top: 65,
-			left: '33%',
 			text: json.data.numView,
-			font: { fontSize: 18, fontStyle: 'bold' }
+			font: { fontSize: 18, fontStyle: 'bold' },
+			left: 25,
+			top: -20
 		});
 		var viewIcon = Ti.UI.createImageView({
 			image: '/images/handheld/view.png',
-			top: 65,
-			left: '25%',
 			width: 20,
-			height: 20
+			height: 20,
+			left: 0
 		});
 		// var labelDes = Ti.UI.createLabel({
 			// top: 36,
 			// left: '25%',
 			// font: { fontSize: 14 }
 		// });
+
+		details.add(labelTitle);
+		details.add(labelAuthor);
+		details.add(labelChapter);
+		details.add(viewIcon);
+		details.add(labelView);
 		infoView.add(cover);
-		infoView.add(labelTitle);
-		infoView.add(labelAuthor);
-		infoView.add(labelChapter);
-		infoView.add(viewIcon);
-		infoView.add(labelView);
+		infoView.add(details);
 		self.add(infoView);
 		self.add(createCustomView());
 		self.add(table);

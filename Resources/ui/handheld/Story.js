@@ -1,3 +1,4 @@
+var Util = require('etc/Util');
 function Story(item, tab) {
 	function setRowData(data) {
 		var dataSet = [];
@@ -64,7 +65,7 @@ function Story(item, tab) {
 			Titanium.Facebook.addEventListener('login', function(e) {
 		    if (e.success) {
 		    	//add to favorite
-					myGlobal.addFavorite(favoriteButton.itemId, 1, e.data, function() {
+					Util.addFavorite(favoriteButton.itemId, 1, e.data, function() {
 						self.rightNavButton = favoritedButton;
 					});
 		    } else if (e.error) {
@@ -75,27 +76,16 @@ function Story(item, tab) {
 			});
 		} else {
 			Titanium.Facebook.requestWithGraphPath('/' + Titanium.Facebook.getUid(), {}, 'GET', function(user) {
-				myGlobal.addFavorite(favoriteButton.itemId, 1, JSON.parse(user.result), function() {
+				Util.addFavorite(favoriteButton.itemId, 1, JSON.parse(user.result), function() {
 					self.rightNavButton = favoritedButton;
 				});
 			});
 		}
 	});
-	//change top bar image
-	self.barImage = '/images/handheld/corkboard.jpg';
-	//change back button style
-	var backbutton = Titanium.UI.createButton({
-		title:'back', 
-		// backgroundImage:'/images/handheld/corkboard.jpg',
-		width:50,
-		height:20
-	});
-	backbutton.addEventListener('click', function() {
-		self.close();
-	});
-	self.leftNavButton = backbutton;
+	self.barImage = '/images/handheld/top.png';
+	self.leftNavButton = Util.backButton(self);
 	//send request to get manga info
-	myGlobal.getAjax('/getStory', {
+	Util.getAjax('/getStory', {
 		'id': item.id,
 		'userId': Titanium.Facebook.getUid()
 	},
@@ -167,14 +157,14 @@ function Story(item, tab) {
 			dialog.addEventListener('click',function(e) {
 				switch (e.index) {
 					case 0:
-						listChapters.sort(myGlobal.dynamicSort('chapter', 1));
+						listChapters.sort(Util.dynamicSort('chapter', 1));
 						break;
 					case 1:
-						listChapters.sort(myGlobal.dynamicSort('chapter', -1));
+						listChapters.sort(Util.dynamicSort('chapter', -1));
 						break;
 				}
 				table.setData([]);
-				tbl_data = setRowData(listChapters, myGlobal.MAX_DISPLAY_ROW);
+				tbl_data = setRowData(listChapters, Util.MAX_DISPLAY_ROW);
 				table.setData(tbl_data);
 			});
 			sortButton.addEventListener('singletap', function(e) {
@@ -192,7 +182,7 @@ function Story(item, tab) {
 			backgroundColor: '#fff'
 		});
 		var cover = Titanium.UI.createImageView({
-			image: myGlobal.SERVER + '/images/story/sample/cover.jpg',
+			image: Util.SERVER + '/images/story/sample/cover.jpg',
 			width: '22%',
 			height: '100%',
 			left: 5

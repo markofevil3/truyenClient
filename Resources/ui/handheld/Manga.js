@@ -1,3 +1,4 @@
+var Util = require('etc/Util');
 function Manga(item, tab) {
 	function setRowData(data, maxRow) {
 		var dataSet = [];
@@ -64,7 +65,7 @@ function Manga(item, tab) {
 			Titanium.Facebook.addEventListener('login', function(e) {
 		    if (e.success) {
 		    	//add to favorite
-					myGlobal.addFavorite(favoriteButton.itemId, 0, e.data, function() {
+					Util.addFavorite(favoriteButton.itemId, 0, e.data, function() {
 						self.rightNavButton = favoritedButton;
 					});
 		    } else if (e.error) {
@@ -75,27 +76,17 @@ function Manga(item, tab) {
 			});
 		} else {
 			Titanium.Facebook.requestWithGraphPath('/' + Titanium.Facebook.getUid(), {}, 'GET', function(user) {
-				myGlobal.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
+				Util.addFavorite(favoriteButton.itemId, 0, JSON.parse(user.result), function() {
 					self.rightNavButton = favoritedButton;
 				});
 			});
 		}
 	});
 	//change top bar image
-	self.barImage = '/images/handheld/corkboard.jpg';
-	//change back button style
-	var backbutton = Titanium.UI.createButton({
-		title:'back', 
-		// backgroundImage:'/images/handheld/corkboard.jpg',
-		width:50,
-		height:20
-	});
-	backbutton.addEventListener('click', function() {
-		self.close();
-	});
-	self.leftNavButton = backbutton;
+	self.barImage = '/images/handheld/top.png';
+	self.leftNavButton = Util.backButton(self);
 	//send request to get manga info
-	myGlobal.getAjax('/manga', {
+	Util.getAjax('/manga', {
 		'id': item.id,
 		'userId': Titanium.Facebook.getUid()
 	},
@@ -107,7 +98,7 @@ function Manga(item, tab) {
 			self.rightNavButton = favoriteButton; 
 		}
 		var listChapters = json.data.chapters;
-		var tbl_data = setRowData(listChapters, myGlobal.MAX_DISPLAY_ROW);
+		var tbl_data = setRowData(listChapters, Util.MAX_DISPLAY_ROW);
 		
 		function getNewestChapter() {
 			var newest = 0;
@@ -177,16 +168,16 @@ function Manga(item, tab) {
 			dialog.addEventListener('click',function(e) {
 				switch (e.index) {
 					case 0:
-						listChapters.sort(myGlobal.dynamicSort('chapter', 1));
+						listChapters.sort(Util.dynamicSort('chapter', 1));
 						break;
 					case 1:
-						listChapters.sort(myGlobal.dynamicSort('chapter', -1));
+						listChapters.sort(Util.dynamicSort('chapter', -1));
 						break;
 				}
 				table.setData([]);
-				tbl_data = setRowData(listChapters, myGlobal.MAX_DISPLAY_ROW);
+				tbl_data = setRowData(listChapters, Util.MAX_DISPLAY_ROW);
 				table.setData(tbl_data);
-				// myGlobal.dynamicLoad(table, listChapters);
+				// Util.dynamicLoad(table, listChapters);
 				// table.setData(setRowData(listChapters));
 			});
 			sortButton.addEventListener('singletap', function(e) {
@@ -204,7 +195,7 @@ function Manga(item, tab) {
 	    // headerView: createCustomView(),
 	    top: 160,
 		});
-		myGlobal.dynamicLoad(table, listChapters);
+		Util.dynamicLoad(table, listChapters);
 		
 		var infoView = Titanium.UI.createView({
 			width: '100%',
@@ -214,7 +205,7 @@ function Manga(item, tab) {
 			layout: 'horizontal'
 		});
 		var cover = Titanium.UI.createImageView({
-			image: myGlobal.SERVER + json.data.folder + '/cover.jpg',
+			image: Util.SERVER + json.data.folder + '/cover.jpg',
 			width: '22%',
 			height: '100%',
 			left: 5

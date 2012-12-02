@@ -1,3 +1,4 @@
+var Util = require('etc/Util');
 function MangaList(tab) {
 	var MAX_DISPLAY_ROW = 5;
 	function setRowData(data) {
@@ -13,7 +14,7 @@ function MangaList(tab) {
 				var index = (i * 3) + j;
 				if (data[index]) {
 					var image = Ti.UI.createImageView({
-						image: myGlobal.SERVER + data[index].folder + '/cover.jpg',
+						image: Util.SERVER + data[index].folder + '/cover.jpg',
 						width: '18%',
 						height: '60%',
 						bottom: 13,
@@ -96,7 +97,7 @@ function MangaList(tab) {
 	self.leftNavButton = backbutton;
 	//end
 	
-	myGlobal.getAjax('/mangaList', {
+	Util.getAjax('/mangaList', {
 		'null': null
 	},
 	function(response) {
@@ -121,9 +122,9 @@ function MangaList(tab) {
 			});
 			search.addEventListener('change', function(e) {
 				var results = [];
-				var regexValue = new RegExp(myGlobal.removeUTF8(e.value), 'i');
+				var regexValue = new RegExp(Util.removeUTF8(e.value), 'i');
 				for (var i in listManga) {
-					if (regexValue.test(myGlobal.removeUTF8(listManga[i].title))) {
+					if (regexValue.test(Util.removeUTF8(listManga[i].title))) {
 						results.push(listManga[i]);
 					}
 				}
@@ -164,16 +165,16 @@ function MangaList(tab) {
 			dialog.addEventListener('click',function(e) {
 				switch (e.index) {
 					case 0:
-						listManga.sort(myGlobal.dynamicSort('title', 1));
+						listManga.sort(Util.dynamicSort('title', 1));
 						break;
 					case 1:
-						listManga.sort(myGlobal.dynamicSort('numView', -1));
+						listManga.sort(Util.dynamicSort('numView', -1));
 						break;
 					case 2:
-						listManga.sort(myGlobal.dynamicSort('datePost', -1));
+						listManga.sort(Util.dynamicSort('datePost', -1));
 						break;
 					case 3:
-						listManga.sort(myGlobal.dynamicSort('title', -1));
+						listManga.sort(Util.dynamicSort('title', -1));
 						break;
 				}
 				table.setData([]);
@@ -192,6 +193,8 @@ function MangaList(tab) {
 	    data:tbl_data,
 	    backgroundImage: '/images/handheld/bookShelf.png',
 	    separatorColor: 'transparent',
+	    style: Ti.UI.iPhone.TableViewStyle.PLAIN,
+	    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
 	    top: 40
 		});
 		

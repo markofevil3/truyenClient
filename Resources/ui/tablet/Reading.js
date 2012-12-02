@@ -1,5 +1,6 @@
+var Util = require('etc/Util');
 function Reading(item) {
-	myGlobal.getAjax('/mangaReading', {
+	Util.getAjax('/mangaReading', {
 		'id': item.id,
 		'chapter': item.chapterId
 	},
@@ -71,7 +72,7 @@ function Reading(item) {
 		var maxZindex = listImages.length;
 		for (var i = 0; i < listImages.length; i++) {
 			var image = Ti.UI.createImageView({
-				image: myGlobal.SERVER + listImages[i],
+				image: Util.SERVER + listImages[i],
 				width: '100%',
 				height: '100%',
 			});

@@ -1,3 +1,4 @@
+var Util = require('etc/Util');
 function StoryReading(item) {
 	var self = Ti.UI.createWindow({
 		title: item.title,
@@ -64,7 +65,7 @@ function StoryReading(item) {
 	topBar.add(buttonClose);
 	topBar.add(buttonTextBig);
 	topBar.add(buttonTextSmall);
-	myGlobal.getAjax('/getStoryContent', {
+	Util.getAjax('/getStoryContent', {
 		'id': item.id,
 		'type': item.type,
 		'chapter': item.chapterId

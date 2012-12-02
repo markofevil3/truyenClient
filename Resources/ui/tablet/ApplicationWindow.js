@@ -8,7 +8,7 @@ function ApplicationWindow(title) {
 			Window = require('ui/tablet/Favorites');
 			break;
 		case 'Settings':
-			Window = require('ui/tablet/Setting');
+			Window = require('ui/common/Setting');
 			break;
 	}
 	var self = new Window();

@@ -9,23 +9,25 @@ if (Ti.version < 1.8 ) {
 		version = Ti.Platform.version,
 		height = Ti.Platform.displayCaps.platformHeight,
 		width = Ti.Platform.displayCaps.platformWidth;
-	
 	//considering tablet to have one dimension over 900px - this is imperfect, so you should feel free to decide
 	//yourself what you consider a tablet form factor for android
 	var isTablet = osname === 'ipad' || (osname === 'android' && (width > 899 || height > 899));
-	
+	var Util = require('etc/Util');
 	var Window;
 	if (isTablet) {
 		Window = require('ui/tablet/ApplicationWindow');
+		Util.RATIO = 2;
 	}
 	else {
 		Window = require('ui/handheld/ApplicationWindow');
 	}
-	Titanium.UI.iPhone.statusBarStyle = Titanium.UI.iPhone.StatusBar.OPAQUE_BLACK;
+	if (osname == 'iphone') {
+		Titanium.UI.iPhone.statusBarStyle = Titanium.UI.iPhone.StatusBar.OPAQUE_BLACK;
+	}
+	
 	Titanium.Facebook.appid = "514307815249030";
 	Titanium.Facebook.permissions = ['publish_stream', 'read_stream'];
-	myGlobal = {};
-	Ti.include('etc/helpers.js');
+
 	var ApplicationTabGroup = require('ui/common/ApplicationTabGroup');
 	new ApplicationTabGroup(Window).open({transition: Ti.UI.iPhone.AnimationStyle.CURL_UP});
 })();

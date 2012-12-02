@@ -1,3 +1,4 @@
+var Util = require('etc/Util');
 function StoryList(tab) {
 	var MAX_DISPLAY_ROW = 4;
 	var search;
@@ -15,7 +16,7 @@ function StoryList(tab) {
 				type: data[i].type
 			});
 			var cover = Ti.UI.createImageView({
-				image: myGlobal.SERVER + '/images/story/sample/cover.jpg',
+				image: Util.SERVER + '/images/story/sample/cover.jpg',
 				width: '22%',
 				height: '95%',
 				left: 0
@@ -125,7 +126,7 @@ function StoryList(tab) {
 	self.leftNavButton = backbutton;
 	//end
 	
-	myGlobal.getAjax('/storyList', {
+	Util.getAjax('/storyList', {
 		'null': null
 	},
 	function(response) {
@@ -149,9 +150,9 @@ function StoryList(tab) {
 			});
 			search.addEventListener('change', function(e) {
 				var results = [];
-				var regexValue = new RegExp(myGlobal.removeUTF8(e.value), 'i');
+				var regexValue = new RegExp(Util.removeUTF8(e.value), 'i');
 				for (var i in listStory) {
-					if (regexValue.test(myGlobal.removeUTF8(listStory[i].title))) {
+					if (regexValue.test(Util.removeUTF8(listStory[i].title))) {
 						results.push(listStory[i]);
 					}
 				}
@@ -189,16 +190,16 @@ function StoryList(tab) {
 			dialog.addEventListener('click',function(e) {
 				switch (e.index) {
 					case 0:
-						listStory.sort(myGlobal.dynamicSort('title', 1));
+						listStory.sort(Util.dynamicSort('title', 1));
 						break;
 					case 1:
-						listStory.sort(myGlobal.dynamicSort('numView', -1));
+						listStory.sort(Util.dynamicSort('numView', -1));
 						break;
 					case 2:
-						listStory.sort(myGlobal.dynamicSort('datePost', -1));
+						listStory.sort(Util.dynamicSort('datePost', -1));
 						break;
 					case 3:
-						listStory.sort(myGlobal.dynamicSort('title', -1));
+						listStory.sort(Util.dynamicSort('title', -1));
 						break;
 				}
 				table.setData([]);

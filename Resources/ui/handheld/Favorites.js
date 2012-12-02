@@ -1,3 +1,4 @@
+var Util = require('etc/Util');
 function Favorites() {
 	var self = Ti.UI.createWindow({
 		title: 'Favorites',
@@ -8,10 +9,12 @@ function Favorites() {
 		backgroundColor: 'transparent',
 		backgroundImage: '/images/handheld/bookShelf.png',
 		backgroundRepeat: true,
-		separatorColor: 'transparent',
+    separatorColor: 'transparent',
+  	style: Ti.UI.iPhone.TableViewStyle.PLAIN,
+    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
 	});
 	function getFavorites() {
-		myGlobal.getAjax('/getFavorites', {
+		Util.getAjax('/getFavorites', {
 			'userId': Titanium.Facebook.getUid()
 		},
 		function(response) {
@@ -29,7 +32,7 @@ function Favorites() {
 			//####### MANGA
 			for (var i = 0; i < listFavorites['manga'].length; i++) {
 				var cover = Ti.UI.createImageView({
-					image: myGlobal.SERVER + listFavorites['manga'][i].folder + '/cover.jpg',
+					image: Util.SERVER + listFavorites['manga'][i].folder + '/cover.jpg',
 					width: 40,
 					height: 60,
 					left: 10,
@@ -109,7 +112,7 @@ function Favorites() {
 		});
 	};
 	
-	self.barImage = '/images/handheld/corkboard.jpg';
+	self.barImage = '/images/handheld/top.png';
 	var facebookButton = Titanium.Facebook.createLoginButton({
 		style: Ti.Facebook.BUTTON_STYLE_NORMAL,
 	});
@@ -130,7 +133,7 @@ function Favorites() {
 		}
 	});
 	tableView.addEventListener('delete', function(e) {
-		myGlobal.getAjax('/removeFavorite', {
+		Util.getAjax('/removeFavorite', {
 			'userId': Titanium.Facebook.getUid(),
 			'itemId': e.rowData.itemId
 		},

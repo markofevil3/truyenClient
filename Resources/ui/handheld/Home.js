@@ -2,7 +2,7 @@ function Home() {
 	var self = Ti.UI.createWindow({
 		title: 'Home',
 	});
-	self.barImage = '/images/handheld/corkboard.jpg';
+	self.barImage = '/images/handheld/top.png';
 	// Create an array of explicitly defined custom TableViewRows
 	var tbl_data = [];
 	var homeMenus = [
@@ -27,7 +27,7 @@ function Home() {
 		var title = Ti.UI.createLabel({
 			text: homeMenus[i].name,
 			color: '#fff',
-			font: { fontSize: 20, fontWeight: 'bold' },
+			font: { fontSize: 20, fontWeight: 'bold', fontFamily: 'Chalkboard SE' },
 			zIndex: 2
 		});
 		row.add(title);

@@ -12,7 +12,7 @@ function Home() {
 	];
 	for (var i = 0; i < homeMenus.length; i++) {
 		var row = Ti.UI.createTableViewRow({
-			height:120,
+			height: 120 * Util.RATIO,
 			backgroundColor: 'transparent',
 			selectedBackgroundColor: 'transparent',
 			name: homeMenus[i].name,
@@ -20,14 +20,14 @@ function Home() {
 		});
 		var image = Ti.UI.createImageView({
 			image: homeMenus[i].image,
-			width: 181,
+			width: 181 * Util.RATIO,
 			// top: -5,
-			height: 45,
+			height: 45 * Util.RATIO,
 		});
 		var title = Ti.UI.createLabel({
 			text: homeMenus[i].name,
 			color: '#fff',
-			font: { fontSize: 20, fontWeight: 'bold' },
+			font: { fontSize: 20 * Util.RATIO, fontWeight: 'bold' },
 			zIndex: 2
 		});
 		row.add(title);

@@ -142,9 +142,9 @@ function Story(item, tab) {
 			var sortButton = Titanium.UI.createButton({
 				text: 'sort',
 				color: '#fff',
-				height: 40,
-				width: 40,
-				right: 16,
+				height: 30,
+				width: 30,
+				right: '8%',
 				backgroundColor: 'transparent',
 				backgroundImage: '/images/handheld/sort.png',
 			});

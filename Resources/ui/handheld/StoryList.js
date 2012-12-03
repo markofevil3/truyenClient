@@ -164,8 +164,8 @@ function StoryList(tab) {
 			var sortButton = Titanium.UI.createButton({
 				text: 'sort',
 				color: '#fff',
-				height: 40,
-				width: 40,
+				height: 30,
+				width: 30,
 				right: 16,
 				backgroundColor: 'transparent',
 				backgroundImage: '/images/handheld/sort.png',
@@ -202,8 +202,8 @@ function StoryList(tab) {
 			var filterButton = Titanium.UI.createButton({
 				text: 'filter',
 				color: '#fff',
-				height: 40,
-				width: 40,
+				height: 30,
+				width: 30,
 				right: 50,
 				backgroundColor: 'transparent',
 				backgroundImage: '/images/handheld/sort.png',

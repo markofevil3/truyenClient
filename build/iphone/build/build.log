@@ -5,7 +5,7 @@ reporting an issue to help us understand your environment, build settings
 and aid in debugging. Please attach this log to any issue that you report.
 ================================================================================
 
-Starting build at 12/02/12 21:05
+Starting build at 12/03/12 22:16
 
 Build details:
 
@@ -23,7 +23,7 @@ Script arguments:
    com.steam.struyen
    truyen
    universal
-   ipad
+   iphone
    
 
 Building from: /Users/rongxanh2052004/Library/Application Support/Titanium/mobilesdk/osx/2.1.3.GA/iphone

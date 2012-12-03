@@ -153,9 +153,9 @@ function Manga(item, tab) {
 			var sortButton = Titanium.UI.createButton({
 				text: 'sort',
 				color: '#fff',
-				height: 40,
-				width: 40,
-				right: 16,
+				height: 30,
+				width: 30,
+				right: '8%',
 				backgroundColor: 'transparent',
 				backgroundImage: '/images/handheld/sort.png',
 			});
@@ -204,12 +204,28 @@ function Manga(item, tab) {
 			backgroundColor: '#fff',
 			layout: 'horizontal'
 		});
-		var cover = Titanium.UI.createImageView({
-			image: Util.SERVER + json.data.folder + '/cover.jpg',
+		var bookView = Titanium.UI.createView({
 			width: '22%',
 			height: '100%',
 			left: 5
 		});
+		var book = Titanium.UI.createImageView({
+			image: '/images/handheld/book1.png',
+			width: '100%',
+			height: '100%',
+			zIndex: 1,
+		});
+		var cover = Titanium.UI.createImageView({
+			image: Util.SERVER + json.data.folder + '/cover.jpg',
+			width: '80%',
+			height: '96%',
+			defaultImage: '/images/handheld/default_image.jpg',
+			zIndex: 2,
+			top: 0,
+			left: '14%',
+		});
+		bookView.add(book);
+		bookView.add(cover);
 		var details = Titanium.UI.createView({
 			width: '72%',
 			height: '100%',
@@ -255,7 +271,7 @@ function Manga(item, tab) {
 		details.add(labelChapter);
 		details.add(viewIcon);
 		details.add(labelView);
-		infoView.add(cover);
+		infoView.add(bookView);
 		infoView.add(details);
 		self.add(infoView);
 		self.add(createCustomView());

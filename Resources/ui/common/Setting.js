@@ -3,7 +3,7 @@ function Setting() {
 	var self = Ti.UI.createWindow({
 		title: 'Setting',
 		backgroundColor: 'transparent',
-		backgroundImage: '/images/handheld/top.png'
+		backgroundImage: '/images/handheld/setting_bg.png'
 	});
 	self.barImage = '/images/handheld/top.png';
 	var osname = Ti.Platform.osname;

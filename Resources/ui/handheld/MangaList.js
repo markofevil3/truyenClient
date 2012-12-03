@@ -13,16 +13,31 @@ function MangaList(tab) {
 			for (var j = 0; j < 3; j++) {
 				var index = (i * 3) + j;
 				if (data[index]) {
-					var image = Ti.UI.createImageView({
-						image: Util.SERVER + data[index].folder + '/cover.jpg',
+					var bookView = Ti.UI.createView({
 						width: '18%',
 						height: '60%',
-						bottom: 13,
+						bottom: 10,
 						left: 12 + (j * (21 + 8)) + '%',
 						title: data[index].title,
 						id: data[index]._id,
+					});
+					var image = Ti.UI.createImageView({
+						image: Util.SERVER + data[index].folder + '/cover.jpg',
+						width: '80%',
+						height: '94%',
+						top: 0,
+						left: '14%',
+						defaultImage: '/images/handheld/default_image.jpg',
 						zIndex: 2,
 					});
+					var book = Ti.UI.createImageView({
+						image: '/images/handheld/book' + j + '.png',
+						width: '100%',
+						height: '100%',
+						zIndex: 1,
+					});
+					bookView.add(image);
+					bookView.add(book);
 					var nameTag = Ti.UI.createLabel({
 						text: data[index].title,
 						color: '#fff',
@@ -40,31 +55,17 @@ function MangaList(tab) {
 					});
 					var nameTagBackground = Ti.UI.createImageView({
 						image: '/images/handheld/bg_paper_tournament.png',
-						height: 40,
+						height: 43,
 						top: 0,
 						width: 90,
 						left: 7.5 + (j * (21 + 8)) + '%',
 						zIndex: 2
 					});
-					var shadow = Ti.UI.createView({
-						width: '18%',
-						height: '70%',
-						bottom: 10,
-						left: 13 + (j * (21 + 8)) + '%',
-						zIndex: 1,
-				    backgroundGradient: {
-			        type: 'linear',
-			        startPoint: { x: '50%', y: '100%' },
-			        endPoint: { x: '50%', y: '0%' },
-			        colors: [ { color: '#000', offset: 0.0}, { color: '#999999', offset: 1.0 } ],
-				    },
-					});
-					selectItem(image);
+					selectItem(bookView);
 					selectItem(nameTag);
-					// row.add(shadow);
 					row.add(nameTagBackground);
 					row.add(nameTag);
-					row.add(image);
+					row.add(bookView);
 				}
 			}
 			dataSet.push(row);
@@ -139,9 +140,9 @@ function MangaList(tab) {
 			var sortButton = Titanium.UI.createButton({
 				text: 'sort',
 				color: '#fff',
-				height: 40,
-				width: 40,
-				right: 16,
+				height: 30,
+				width: 30,
+				right: '8%',
 				backgroundColor: 'transparent',
 				backgroundImage: '/images/handheld/sort.png',
 			});

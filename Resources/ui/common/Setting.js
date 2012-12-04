@@ -60,10 +60,7 @@ function Setting() {
     height: '50%',
     scrollable: false,
     backgroundColor: 'transparent',
-    top: 0,
-    // separatorColor: 'transparent',
-    // style: Ti.UI.iPhone.TableViewStyle.PLAIN,
-    // separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
+    top: 0
 	});
 	table.addEventListener('click', function(e) {
 		var Window = require('ui/common/' + e.rowData.id);

@@ -5,17 +5,16 @@ function Manga(item, tab) {
 		for (var i = 0; i < maxRow; i++) {
 			if (data[i]) {
 				var row = Ti.UI.createTableViewRow({
-					backgroundColor: 'transparent',
-					// backgroundImage: '/images/handheld/bookShelf.png',
-					// selectedBackgroundColor: 'transparent',
+			    backgroundImage: '/images/handheld/bookShelf.png',
 					height: 40,
 					chapterId: data[i]._id,
 					id: item.id,
 				});
 				var labelChapter = Ti.UI.createLabel({
 					text: 'Chapter ' + data[i].chapter,
-					left:10,
-					font: { fontWeight: 'bold', fontSize: 17 }
+					color: '#fff',
+					textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+					font: { fontWeight: 'bold', fontSize: 17, fontFamily: 'Chalkboard SE' }
 				});
 				var labelTitle = Ti.UI.createLabel({
 					text: data[i].title,
@@ -56,7 +55,7 @@ function Manga(item, tab) {
 	});
 	var self = Ti.UI.createWindow({
 		title: item.title,
-		rightNavButton: favoriteButton
+		rightNavButton: favoriteButton,
 	});
 	//enable favorite button
 	favoriteButton.addEventListener('click', function() {
@@ -114,7 +113,7 @@ function Manga(item, tab) {
 			var view = Ti.UI.createView({
 				backgroundColor: '#222',
 				height: 40,
-				backgroundImage: '/images/handheld/searchBackground.png',
+				backgroundImage: '/images/handheld/setting_bg.png',
 				backgroundColor: 'transparent',
 				top: 120,
 			});
@@ -177,8 +176,6 @@ function Manga(item, tab) {
 				table.setData([]);
 				tbl_data = setRowData(listChapters, Util.MAX_DISPLAY_ROW);
 				table.setData(tbl_data);
-				// Util.dynamicLoad(table, listChapters);
-				// table.setData(setRowData(listChapters));
 			});
 			sortButton.addEventListener('singletap', function(e) {
 				dialog.show();
@@ -190,10 +187,12 @@ function Manga(item, tab) {
 		};
 		var table = Titanium.UI.createTableView({
 	    data: tbl_data,
-	    // backgroundImage: '/images/handheld/bookShelf.png',
-	    // separatorColor: 'transparent',
-	    // headerView: createCustomView(),
+	    backgroundColor: '#fff',
+	    separatorColor: 'transparent',
+	    style: Ti.UI.iPhone.TableViewStyle.PLAIN,
+	    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
 	    top: 160,
+	    id: item.id,
 		});
 		Util.dynamicLoad(table, listChapters);
 		
@@ -201,7 +200,8 @@ function Manga(item, tab) {
 			width: '100%',
 			height: 120,
 			top: 0,
-			backgroundColor: '#fff',
+			backgroundColor: '#d8cdc0',
+			backgroundImage: '/images/handheld/whitePaper.png',
 			layout: 'horizontal'
 		});
 		var bookView = Titanium.UI.createView({
@@ -229,13 +229,14 @@ function Manga(item, tab) {
 		var details = Titanium.UI.createView({
 			width: '72%',
 			height: '100%',
-			backgroundColor: '#fff',
+			backgroundColor: 'transparent',
 			layout: 'vertical',
 			left: 5
 		});
 		var labelTitle = Ti.UI.createLabel({
 			text: json.data.title,
-			font: { fontWeight: 'bold', fontSize: 19 },
+			color: '#fff',
+			font: { fontWeight: 'bold', fontSize: 19, fontFamily: 'Chalkboard SE'},
 			left: 0
 		});
 		var labelAuthor = Ti.UI.createLabel({

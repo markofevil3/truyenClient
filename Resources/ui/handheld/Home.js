@@ -44,8 +44,12 @@ function Home() {
 	});
 	
 	table.addEventListener('click', function(e) {
-		var Window = require('ui/handheld/' + e.rowData.id);
-		new Window(self);
+		if (e.rowData.id == 'FunnyList') {
+			alert('Comming Soon!');
+		} else {
+			var Window = require('ui/handheld/' + e.rowData.id);
+			new Window(self);			
+		}
 	});
 	self.add(table);
 	

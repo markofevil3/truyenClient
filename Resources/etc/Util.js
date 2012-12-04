@@ -3,7 +3,7 @@
 function Util() {};
 
 Util.SERVER = 'http://localhost:3000';
-Util.MAX_DISPLAY_ROW = 40;
+Util.MAX_DISPLAY_ROW = 3;
 Util.RATIO = 1;
 
 Util.isTablet = function() {
@@ -102,17 +102,18 @@ Util.dynamicLoad = function(tableView, data) {
 		}
 		for (var i = lastRowIndex - 1; i < nextRowIndex; i++) {
 			var row = Ti.UI.createTableViewRow({
-				backgroundColor: 'transparent',
-				// backgroundImage: '/images/bookShelf.png',
-				// selectedBackgroundColor: 'transparent',
+		    backgroundImage: '/images/handheld/bookShelf.png',
 				height: 40,
-				id: data[i]._id,
-				info: data[i]
+				chapterId: data[i]._id,
+				id: tableView.id,
+				// id: data[i]._id,
+				// info: data[i]
 			});
 			var labelChapter = Ti.UI.createLabel({
 				text: 'Chapter ' + data[i].chapter,
-				left:10,
-				font: { fontWeight: 'bold', fontSize: 17 }
+				color: '#fff',
+				textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+				font: { fontWeight: 'bold', fontSize: 17, fontFamily: 'Chalkboard SE' }
 			});
 			var labelTitle = Ti.UI.createLabel({
 				text: data[i].title,
@@ -138,7 +139,7 @@ Util.dynamicLoad = function(tableView, data) {
 		if (distance < lastDistance) {
 			var nearEnd = theEnd * 1;
 			if (!updating && (total >= nearEnd) && lastRowIndex < data.length && tableView.data[0].rows[0].chapterId == data[0]._id 
-			&& tableView.data[0].rows[1].chapterId == data[1]._id
+			&& (tableView.data[0].rows[1] && tableView.data[0].rows[1].chapterId == data[1]._id)
 			&& tableView.data[0].rows[lastRowIndex - 1].chapterId != data[data.length -1]._id && lastRowIndex >= Util.MAX_DISPLAY_ROW) {
 				beginUpdate();
 			}

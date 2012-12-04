@@ -8,27 +8,28 @@ function AboutUs(tab) {
 	self.barImage = '/images/handheld/top.png';
 	var labelName = Ti.UI.createLabel({
 		text: 'S Truyện',
-		font: { fontSize: 18 * Util.RATIO, fontWeight: 'bold' },
+		color: '#fff',
+		font: { fontSize: 20 * Util.RATIO, fontWeight: 'bold', fontFamily: 'Chalkboard SE'  },
 		textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
-		top: 0,
-		color: 'blue'
+		top: '30%',
 	});
 	var labelVersion = Ti.UI.createLabel({
 		text: 'Version 1.0',
 		font: { fontSize: 15 * Util.RATIO, fontStyle: 'italic' },
 		textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
-		top: 22 * Util.RATIO,
 	});
 	var labelEmail= Ti.UI.createLabel({
 		text: 'Support: struyen@gmail.com',
 		font: { fontSize: 17 * Util.RATIO, fontStyle: 'bold' },
 		textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
-		top: 45 * Util.RATIO,
 		color: '#008AE6'
 	});
 	var view = Ti.UI.createView({
 		width: '100%',
-		height: 100 * Util.RATIO,
+		height: '100%',
+		backgroundColor: '#eabf8b',
+		backgroundImage: '/images/handheld/setting_bg.png',
+		layout: 'vertical'
 	})
 	view.add(labelName);
 	view.add(labelVersion);

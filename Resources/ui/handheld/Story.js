@@ -4,9 +4,7 @@ function Story(item, tab) {
 		var dataSet = [];
 		for (var i = 0; i < data.length; i++) {
 			var row = Ti.UI.createTableViewRow({
-				backgroundColor: 'transparent',
-				// backgroundImage: '/images/handheld/bookShelf.png',
-				// selectedBackgroundColor: 'transparent',
+		    backgroundImage: '/images/handheld/bookShelf.png',
 				height: 40,
 				id: item.id,
 				chapterId: data[i]._id,
@@ -15,12 +13,15 @@ function Story(item, tab) {
 			});
 			var labelChapter = Ti.UI.createLabel({
 				text: 'Chapter ' + data[i].chapter + ':',
-				left:10,
-				font: { fontWeight: 'bold', fontSize: 17 }
+				color: '#fff',
+				left: 17,
+				font: { fontWeight: 'bold', fontSize: 17, fontFamily: 'Chalkboard SE' }
 			});
 			var labelTitle = Ti.UI.createLabel({
 				text: data[i].title,
-				left: 105
+				left: 115,
+				color: '#fff',
+				font: { fontWeight: 'bold', fontSize: 17, fontFamily: 'Chalkboard SE' }
 			});
 			row.add(labelChapter);
 			row.add(labelTitle);
@@ -164,7 +165,7 @@ function Story(item, tab) {
 						break;
 				}
 				table.setData([]);
-				tbl_data = setRowData(listChapters, Util.MAX_DISPLAY_ROW);
+				tbl_data = setRowData(listChapters);
 				table.setData(tbl_data);
 			});
 			sortButton.addEventListener('singletap', function(e) {
@@ -179,14 +180,31 @@ function Story(item, tab) {
 			width: '100%',
 			height: 120,
 			top: 0,
-			backgroundColor: '#fff'
+			backgroundColor: '#d8cdc0',
+			backgroundImage: '/images/handheld/whitePaper.png',
 		});
-		var cover = Titanium.UI.createImageView({
-			image: Util.SERVER + '/images/story/sample/cover.jpg',
+			var bookView = Titanium.UI.createView({
 			width: '22%',
 			height: '100%',
 			left: 5
 		});
+		var book = Titanium.UI.createImageView({
+			image: '/images/handheld/book1.png',
+			width: '100%',
+			height: '100%',
+			zIndex: 1,
+		});
+		var cover = Titanium.UI.createImageView({
+			image: Util.SERVER + '/images/story/sample/cover.jpg',
+			width: '80%',
+			height: '96%',
+			defaultImage: '/images/handheld/default_image.jpg',
+			zIndex: 2,
+			top: 0,
+			left: '14%',
+		});
+		bookView.add(book);
+		bookView.add(cover);
 		var labelTitle = Ti.UI.createLabel({
 			text: json.data.title,
 			left: '25%',
@@ -205,15 +223,16 @@ function Story(item, tab) {
 			text: json.data.shortDes,
 			font: { fontSize: 14 }
 		});
-		infoView.add(cover);
+		infoView.add(bookView);
 		infoView.add(labelTitle);
 		infoView.add(labelAuthor);
 		infoView.add(labelDes);
 		var table = Titanium.UI.createTableView({
 	    data: tbl_data,
-	    // backgroundImage: '/images/handheld/bookShelf.png',
-	    // separatorColor: 'transparent',
-	    // headerView: createCustomView(),
+	    backgroundColor: '#fff',
+	    separatorColor: 'transparent',
+	    style: Ti.UI.iPhone.TableViewStyle.PLAIN,
+	    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
 	    top: 160,
 		});
 		self.add(table);

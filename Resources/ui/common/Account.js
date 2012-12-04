@@ -13,7 +13,9 @@ function Account(tab) {
 	});
 	var view = Ti.UI.createView({
 		width: '100%',
-		height: 'auto',
+		height: '100%',
+		backgroundColor: '#eabf8b',
+		backgroundImage: '/images/handheld/setting_bg.png',
 	});
 	view.add(facebookButton);
 	self.add(view);

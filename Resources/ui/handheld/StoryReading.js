@@ -72,7 +72,6 @@ function StoryReading(item) {
 	},
 	function(response) {
 		var story = JSON.parse(response).data;
-		Ti.API.info(JSON.stringify(story.content));
 		var view = Ti.UI.createScrollView({
 		  contentHeight: 'auto',
 		  showVerticalScrollIndicator: true,

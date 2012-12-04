@@ -23,7 +23,7 @@ function Setting() {
 		height: 120 * Util.RATIO,
 		bottom: 0,
 		textAlign:'center', 
-		backgroundColor: '#fff',
+		backgroundColor: 'transparent',
 		// backgroundImage: '/images/handheld/background.png'
 	});
 	var tbl_data = [];
@@ -34,7 +34,7 @@ function Setting() {
 		hasChild: true,
 		title: 'Yêu Cầu Truyện',
 		color: '#fff',
-		font: { fontWeight: 'bold', fontSize: 14 * Util.RATIO, fontFamily: 'Chalkboard SE' },
+		font: { fontWeight: 'bold', fontSize: 16 * Util.RATIO, fontFamily: 'Chalkboard SE' },
 	});
 	var aboutUs = Ti.UI.createTableViewRow({
 		height: 40 * Util.RATIO,
@@ -42,7 +42,7 @@ function Setting() {
 		hasChild: true,
 		title: 'Giới Thiệu',
 		color: '#fff',
-		font: { fontWeight: 'bold', fontSize: 14 * Util.RATIO, fontFamily: 'Chalkboard SE' },
+		font: { fontWeight: 'bold', fontSize: 16 * Util.RATIO, fontFamily: 'Chalkboard SE' },
 	});
 	var account = Ti.UI.createTableViewRow({
 		height: 40 * Util.RATIO,
@@ -50,17 +50,20 @@ function Setting() {
 		hasChild: true,
 		title: 'Tài Khoản',
 		color: '#fff',
-		font: { fontWeight: 'bold', fontSize: 14 * Util.RATIO, fontFamily: 'Chalkboard SE' },
+		font: { fontWeight: 'bold', fontSize: 16 * Util.RATIO, fontFamily: 'Chalkboard SE' },
 	});
 	tbl_data.push(account);
 	tbl_data.push(support);
 	tbl_data.push(aboutUs);
 	var table = Titanium.UI.createTableView({
     data: tbl_data,
-    height: 'auto',
+    height: '50%',
     scrollable: false,
     backgroundColor: 'transparent',
-    // backgroundImage: '/images/tablet/bookShelf.png',
+    top: 0,
+    // separatorColor: 'transparent',
+    // style: Ti.UI.iPhone.TableViewStyle.PLAIN,
+    // separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
 	});
 	table.addEventListener('click', function(e) {
 		var Window = require('ui/common/' + e.rowData.id);

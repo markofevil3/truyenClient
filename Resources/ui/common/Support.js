@@ -9,6 +9,7 @@ function Support(tab) {
 	self.barImage = '/images/handheld/top.png';
 	var labelSubject = Ti.UI.createLabel({
 		text: 'Để yêu cầu truyện, bạn nên cung cấp đầy đủ thông tin về truyện: tên truyện, tác giả, quốc gia, link truyện(nếu có) ...',
+		color: '#fff',
 		font: { fontSize: 15 * Util.RATIO, fontStyle: 'italic' },
 		textAlign: Titanium.UI.TEXT_ALIGNMENT_LEFT,
 	});
@@ -16,7 +17,7 @@ function Support(tab) {
 	  borderWidth: 2,
 	  borderColor: '#bbb',
 	  borderRadius: 5,
-	  color: '#888',
+	  color: '#000',
 	  font: {fontSize: 18 * Util.RATIO},
 		keyboardType : Ti.UI.KEYBOARD_DEFAULT,
 		returnKeyType : Ti.UI.RETURNKEY_DEFAULT,
@@ -53,7 +54,9 @@ function Support(tab) {
 	
 	var view = Ti.UI.createScrollView({
 		width: '100%',
-		height: 'auto',
+		height: '100%',
+		backgroundColor: '#eabf8b',
+		backgroundImage: '/images/handheld/setting_bg.png',
 		layout: 'vertical'
 	})
 	view.addEventListener('singletap', function(e) {

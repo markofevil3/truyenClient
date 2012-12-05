@@ -3,7 +3,7 @@
 function Util() {};
 
 Util.SERVER = 'http://localhost:3000';
-Util.MAX_DISPLAY_ROW = 3;
+Util.MAX_DISPLAY_ROW = 30;
 Util.RATIO = 1;
 
 Util.isTablet = function() {

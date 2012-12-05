@@ -3,6 +3,13 @@ function StoryList(tab) {
 	var MAX_DISPLAY_ROW = 4;
 	var search;
 	var listStory;
+	function getTypeText(type) {
+		if (type == 1) {
+			return 'Truyện ngắn';
+		} else {
+			return 'Truyện dài';
+		}
+	};
 	function setRowData(data) {
 		var dataSet = [];
 		for (var i = 0; i < data.length; i++) {
@@ -15,27 +22,52 @@ function StoryList(tab) {
 				id: data[i]._id,
 				type: data[i].type
 			});
+			var bookStyle = 4;
+			if (data[i].type == 0) {
+				bookStyle = 5;
+			}
+			var bookView = Ti.UI.createView({
+				backgroundImage: '/images/handheld/book' + bookStyle + '.png',
+				backgroundColor: 'transparent',
+				width: '19%',
+				height: '90%',
+				left: '1%'
+			});
 			var cover = Ti.UI.createImageView({
 				image: Util.SERVER + '/images/story/sample/cover.jpg',
-				width: '22%',
-				height: '95%',
-				left: 0
+				width: '100%',
+				height: '92%',
 			});
+			bookView.add(cover);
+			var detailsView = Ti.UI.createView({
+				width: '75%',
+				height: '100%',
+				left: '24%',
+				layout: 'vertical',
+			})
 			var labelTitle = Ti.UI.createLabel({
 				text: data[i].title,
-				left: 70,
-				top: 3,
-				font: { fontWeight: 'bold', fontSize: 19 }
+				font: { fontWeight: 'bold', fontSize: 19, fontFamily: 'Chalkboard SE' },
+				left: 0,
+				color: '#fff'
 			});
 			var labelAuthor = Ti.UI.createLabel({
-				top: 26,
-				left: 70,
 				text: 'Tác giả: ' + data[i].author,
-				font: { fontSize: 17, fontStyle: 'italic' }
+				font: { fontSize: 17, fontStyle: 'italic', fontFamily: 'Chalkboard SE' },
+				left: 0,
+				color: '#fff'
 			});
-			row.add(cover);
-			row.add(labelTitle);
-			row.add(labelAuthor);
+			var labeType = Ti.UI.createLabel({
+				text: 'Thể loại: ' + getTypeText(data[i].title.type),
+				font: { fontStyle: 'italic', fontSize: 15, fontFamily: 'Chalkboard SE' },
+				left: 0,
+				color: '#fff'
+			});
+			detailsView.add(labelTitle);
+			detailsView.add(labelAuthor);
+			detailsView.add(labeType);
+			row.add(bookView);
+			row.add(detailsView);
 			selectItem(row);
 			dataSet.push(row);
 		}
@@ -126,7 +158,7 @@ function StoryList(tab) {
 			var view = Ti.UI.createView({
 				backgroundColor: '#222',
 				height: 40,
-				backgroundImage: '/images/handheld/searchBackground.png',
+				backgroundImage: '/images/handheld/setting_bg.png',
 				backgroundColor: 'transparent',
 				top: 0
 			});
@@ -199,24 +231,16 @@ function StoryList(tab) {
 			});
 			//#### end sort
 			//### filter
-			var filterButton = Titanium.UI.createButton({
-				text: 'filter',
+			var tabBar = Titanium.UI.iOS.createTabbedBar({
+				labels:['Tất cả', 'Tr.ngắn', 'Tr.dài'],
+				index:0,
+				backgroundColor:'#c69656',
+				style:Titanium.UI.iPhone.SystemButtonStyle.BAR,
 				color: '#fff',
-				height: 30,
-				width: 30,
-				right: 50,
-				backgroundColor: 'transparent',
-				backgroundImage: '/images/handheld/sort.png',
+				font: { fontWeight: 'bold' }
 			});
-			var optionsFilterDialogOpts = {
-				options:['Tất Cả', 'Truyện Ngắn', 'Truyện Dài'],
-				// selectedIndex: 0,
-				title:'Thể Loại:',
-				destructive: 0
-			};
 			var cloneListStory = listStory.slice(0);
-			var filterDialog = Titanium.UI.createOptionDialog(optionsFilterDialogOpts);
-			filterDialog.addEventListener('click',function(e) {
+			tabBar.addEventListener('click', function(e) {
 				switch (e.index) {
 					case 0:
 						listStory = cloneListStory.slice(0);
@@ -238,24 +262,21 @@ function StoryList(tab) {
 						}
 						break;
 				}
-				filterDialog.destructive = e.index;
 				table.setData([]);
 				table.setData(setRowData(listStory.slice(0, MAX_DISPLAY_ROW)));
-				// dynamicLoad(table, listStory);
 			});
-			filterButton.addEventListener('singletap', function(e) {
-				filterDialog.show();
-			});
+			self.setTitleControl(tabBar);
 			//### end filter
 			view.add(search);
 			view.add(sortButton);
-			view.add(filterButton);
 			return view;
 		};
 		
 		var table = Titanium.UI.createTableView({
 	    data:tbl_data,
-	    backgroundImage: '/images/handheld/bookShelf.png',
+	    backgroundImage: '/images/handheld/setting_bg.png',
+	    backgroundColor: 'transparent',
+	    separatorColor: '#aa7845',
 	    top: 40
 		});
 		dynamicLoad(table);

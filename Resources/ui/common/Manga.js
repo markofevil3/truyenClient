@@ -6,7 +6,7 @@ function Manga(item, tab) {
 			if (data[i]) {
 				var row = Ti.UI.createTableViewRow({
 			    backgroundImage: '/images/handheld/bookShelf.png',
-					height: 40,
+					height: 40 * Util.RATIO,
 					chapterId: data[i]._id,
 					id: item.id,
 				});
@@ -14,11 +14,11 @@ function Manga(item, tab) {
 					text: 'Chapter ' + data[i].chapter,
 					color: '#fff',
 					textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-					font: { fontWeight: 'bold', fontSize: 17, fontFamily: 'Chalkboard SE' }
+					font: { fontWeight: 'bold', fontSize: 17 * Util.RATIO, fontFamily: 'Chalkboard SE' }
 				});
 				var labelTitle = Ti.UI.createLabel({
 					text: data[i].title,
-					left: 105
+					left: 105 * Util.RATIO
 				});
 				row.add(labelTitle);
 				row.add(labelChapter);
@@ -31,7 +31,7 @@ function Manga(item, tab) {
 	
 	function selectItem(item) {
 		item.addEventListener('click', function(e) {
-			var Window = require('ui/handheld/Reading');
+			var Window = require('ui/common/Reading');
 			new Window(item);
 		});
 	};
@@ -54,8 +54,9 @@ function Manga(item, tab) {
 		backgroundImage: '/images/handheld/favorites_color.png',
 	});
 	var self = Ti.UI.createWindow({
-		title: item.title,
+		title: item.name,
 		rightNavButton: favoriteButton,
+		backgroundImage: '/images/handheld/setting_bg.png',
 	});
 	//enable favorite button
 	favoriteButton.addEventListener('click', function() {
@@ -115,7 +116,7 @@ function Manga(item, tab) {
 				height: 40,
 				backgroundImage: '/images/handheld/setting_bg.png',
 				backgroundColor: 'transparent',
-				top: 120,
+				top: 120 * Util.RATIO,
 			});
 			var search = Titanium.UI.createSearchBar({
 				barColor:'transparent',
@@ -123,7 +124,8 @@ function Manga(item, tab) {
 				backgroundImage: '/images/handheld/search.png',
 				backgroundColor: 'transparent',
 				width: '70%',
-				left: 16
+				height: 40,
+				left: 16 * Util.RATIO
 			});
 			search.addEventListener('change', function(e) {
 				var results = [];
@@ -187,18 +189,18 @@ function Manga(item, tab) {
 		};
 		var table = Titanium.UI.createTableView({
 	    data: tbl_data,
-	    backgroundColor: '#fff',
+	    backgroundColor: 'transparent',
 	    separatorColor: 'transparent',
 	    style: Ti.UI.iPhone.TableViewStyle.PLAIN,
 	    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-	    top: 160,
+	    top: 160 * Util.RATIO - 40,
 	    id: item.id,
 		});
 		Util.dynamicLoad(table, listChapters);
 		
 		var infoView = Titanium.UI.createView({
 			width: '100%',
-			height: 120,
+			height: 120 * Util.RATIO,
 			top: 0,
 			backgroundColor: '#d8cdc0',
 			backgroundImage: '/images/handheld/whitePaper.png',
@@ -207,7 +209,7 @@ function Manga(item, tab) {
 		var bookView = Titanium.UI.createView({
 			width: '22%',
 			height: '100%',
-			left: 5
+			left: 5 * Util.RATIO
 		});
 		var book = Titanium.UI.createImageView({
 			image: '/images/handheld/book1.png',
@@ -231,34 +233,34 @@ function Manga(item, tab) {
 			height: '100%',
 			backgroundColor: 'transparent',
 			layout: 'vertical',
-			left: 5
+			left: 5 * Util.RATIO
 		});
 		var labelTitle = Ti.UI.createLabel({
 			text: json.data.title,
 			color: '#fff',
-			font: { fontWeight: 'bold', fontSize: 19, fontFamily: 'Chalkboard SE'},
+			font: { fontWeight: 'bold', fontSize: 19 * Util.RATIO, fontFamily: 'Chalkboard SE'},
 			left: 0
 		});
 		var labelAuthor = Ti.UI.createLabel({
 			text: 'Tác giả: ' + json.data.author,
-			font: { fontSize: 16, fontStyle: 'italic' },
+			font: { fontSize: 16 * Util.RATIO, fontStyle: 'italic' },
 			left: 0
 		});
 		var labelChapter = Ti.UI.createLabel({
 			text: 'Newest Chapter: ' + getNewestChapter(),
-			font: { fontSize: 18, fontStyle: 'bold' },
+			font: { fontSize: 18 * Util.RATIO, fontStyle: 'bold' },
 			left: 0
 		});
 		var labelView = Ti.UI.createLabel({
 			text: json.data.numView,
-			font: { fontSize: 18, fontStyle: 'bold' },
-			left: 25,
-			top: -20
+			font: { fontSize: 18 * Util.RATIO, fontStyle: 'bold' },
+			left: 25 * Util.RATIO,
+			top: -20 * Util.RATIO
 		});
 		var viewIcon = Ti.UI.createImageView({
 			image: '/images/handheld/view.png',
-			width: 20,
-			height: 20,
+			width: 20 * Util.RATIO,
+			height: 20 * Util.RATIO,
 			left: 0
 		});
 		// var labelDes = Ti.UI.createLabel({

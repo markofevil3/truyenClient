@@ -17,11 +17,12 @@ function Reading(item) {
 		//###### TOPBAR
 		var buttonClose = Titanium.UI.createButton({
 			title: 'close',
-			width: 60,
-			height: 25,
-			right: 10,
-			borderRadius: 5,
-			borderWidth: 1,
+			width: 60 * Util.RATIO,
+			height: 25 * Util.RATIO,
+			right: 10 * Util.RATIO,
+			font: { fontWeight: 'bold', fontSize: 14 * Util.RATIO },
+			borderRadius: 5 * Util.RATIO,
+			borderWidth: 1 * Util.RATIO,
 			borderColor: '#ffffff',
 			backgroundColor: '#222',
 			backgroundImage: 'NONE',
@@ -36,17 +37,17 @@ function Reading(item) {
 		var chapterLabel = Ti.UI.createLabel({
 			text: 'Chapter ' + json.chapter,
 			color: '#CCCCCC',
-			font: { fontWeight: 'bold', fontSize: 17 }
+			font: { fontWeight: 'bold', fontSize: 17 * Util.RATIO }
 		});
 		pagesLabel = Ti.UI.createLabel({
 			text: '1/' + listImages.length,
 			color: '#CCCCCC',
 			left: 10,
-			font: { fontSize: 17 }
+			font: { fontSize: 17 * Util.RATIO }
 		});
 		var topBar =  Ti.UI.createView({
 			backgroundColor: '#000',
-			height: 40,
+			height: 40 * Util.RATIO,
 			top: 0,
 			zIndex: 999
 		});

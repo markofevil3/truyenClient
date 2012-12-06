@@ -19,7 +19,7 @@ function MangaList(tab) {
 						height: '60%',
 						bottom: 13,
 						left: 12 + (j * (21 + 8)) + '%',
-						title: data[index].title,
+						name: data[index].title,
 						id: data[index]._id,
 						zIndex: 2,
 					});
@@ -35,7 +35,7 @@ function MangaList(tab) {
 						horizontalWrap: true,
 						left: 8 + (j * (21 + 8)) + '%',
 						zIndex: 3,
-						title: data[index].title,
+						name: data[index].title,
 						id: data[index]._id,
 					});
 					var nameTagBackground = Ti.UI.createImageView({

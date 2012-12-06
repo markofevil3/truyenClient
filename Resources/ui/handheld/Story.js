@@ -57,7 +57,8 @@ function Story(item, tab) {
 	});
 	var self = Ti.UI.createWindow({
 		title: item.name,
-		rightNavButton: favoriteButton
+		rightNavButton: favoriteButton,
+		backgroundImage: '/images/handheld/setting_bg.png',
 	});
 	//enable favorite button
 	favoriteButton.addEventListener('click', function() {
@@ -229,7 +230,7 @@ function Story(item, tab) {
 		infoView.add(labelDes);
 		var table = Titanium.UI.createTableView({
 	    data: tbl_data,
-	    backgroundColor: '#fff',
+	    backgroundColor: 'transparent',
 	    separatorColor: 'transparent',
 	    style: Ti.UI.iPhone.TableViewStyle.PLAIN,
 	    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,

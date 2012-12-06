@@ -75,7 +75,7 @@ function MangaList(tab) {
 	
 	function selectItem(item) {
 		item.addEventListener('click', function(e) {
-			var Window = require('ui/handheld/Manga');
+			var Window = require('ui/common/Manga');
 			new Window(item, tab);
 		});
 	};

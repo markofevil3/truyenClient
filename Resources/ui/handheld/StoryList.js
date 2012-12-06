@@ -142,6 +142,7 @@ function StoryList(tab) {
 	};
 	var self = Ti.UI.createWindow({
 		title: 'Story',
+		backgroundImage: '/images/handheld/setting_bg.png',
 	});
 	//change top bar image
 	self.barImage = '/images/handheld/top.png';

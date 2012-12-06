@@ -5,7 +5,7 @@ function ApplicationWindow(title) {
 			Window = require('ui/handheld/Home');
 			break;
 		case 'Favorites':
-			Window = require('ui/handheld/Favorites');
+			Window = require('ui/common/Favorites');
 			break;
 		case 'Settings':
 			Window = require('ui/common/Setting');

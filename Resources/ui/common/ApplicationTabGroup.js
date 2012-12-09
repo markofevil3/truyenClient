@@ -36,7 +36,7 @@ function ApplicationTabGroup(Window) {
 	overrideTabs(
     self, // The tab group
     { backgroundImage: '/images/handheld/top.png' }, // View parameters for the background
-    { backgroundImage: '/images/handheld/top_active.png', backgroundColor: 'transparent', color: '#000', style: 0 }, // View parameters for selected tabs 
+    { backgroundImage: '/images/handheld/top-active.png', backgroundColor: 'transparent', color: '#000', style: 0 }, // View parameters for selected tabs 
     { backgroundImage: '/images/handheld/top.png', backgroundColor: 'transparent', color: '#888', style: 0 } // View parameters for deselected tabs
 	);
 	return self;

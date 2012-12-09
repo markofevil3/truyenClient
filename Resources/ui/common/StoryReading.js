@@ -2,6 +2,7 @@ var Util = require('etc/Util');
 function StoryReading(item) {
 	var self = Ti.UI.createWindow({
 		title: item.title,
+		backgroundColor: '#f3f3f3'
 	});
 	var labelContent;
 	function changeTextSize(size) {
@@ -9,14 +10,15 @@ function StoryReading(item) {
 	};
 	var buttonClose = Titanium.UI.createButton({
 		title: 'close',
-		width: 60,
-		height: 30,
-		right: 5,
-		borderRadius: 5,
-		borderWidth: 1,
+		width: 60 * Util.RATIO,
+		height: 30 * Util.RATIO,
+		right: 5 * Util.RATIO,
+		borderRadius: 5 * Util.RATIO,
+		borderWidth: 1 * Util.RATIO,
 		borderColor: '#ffffff',
 		backgroundColor: '#222',
 		backgroundImage: 'NONE',
+		font: { fontWeight: 'bold', fontSize: 14 * Util.RATIO },
 		selectedColor: '#333',
 		color: '#CCCCCC'
 	});
@@ -26,39 +28,39 @@ function StoryReading(item) {
 		self.close({ transform: smallDown, duration:300 });
 	});
 	var buttonTextBig = Titanium.UI.createButton({
-		width: 30,
-		height: 30,
-		right: 75,
+		width: 30 * Util.RATIO,
+		height: 30 * Util.RATIO,
+		right: 75 * Util.RATIO,
 		title: 'A',
 		color: '#fff',
-		font: { fontWeight: 'bold', fontSize: 19 },
+		font: { fontWeight: 'bold', fontSize: 19 * Util.RATIO },
 		backgroundColor: '#222',
 		backgroundImage: 'NONE',
 		selectedColor: '#333',
-		borderRadius: 3,
+		borderRadius: 3 * Util.RATIO,
 	});
 	var buttonTextSmall = Titanium.UI.createButton({
-		width: 30,
-		height: 30,
-		right: 115,
+		width: 30 * Util.RATIO,
+		height: 30 * Util.RATIO,
+		right: 115 * Util.RATIO,
 		title: 'A',
 		color: '#fff',
-		font: { fontWeight: 'bold', fontSize: 13 },
+		font: { fontWeight: 'bold', fontSize: 13 * Util.RATIO },
 		backgroundColor: '#222',
 		backgroundImage: 'NONE',
 		selectedColor: '#333',
-		borderRadius: 3,
+		borderRadius: 3 * Util.RATIO,
 	});
 	
 	buttonTextBig.addEventListener('click', function() {
-		changeTextSize(22);
+		changeTextSize(22 * Util.RATIO);
 	});
 	buttonTextSmall.addEventListener('click', function() {
-		changeTextSize(18);
+		changeTextSize(18 * Util.RATIO);
 	});
 	var topBar = Ti.UI.createView({
 		width: '100%',
-		height: 40,
+		height: 40 * Util.RATIO,
 		backgroundColor: '#fff',
 		top: 0
 	});
@@ -72,20 +74,19 @@ function StoryReading(item) {
 	},
 	function(response) {
 		var story = JSON.parse(response).data;
-		Ti.API.info(JSON.stringify(story.content));
 		var view = Ti.UI.createScrollView({
 		  contentHeight: 'auto',
 		  showVerticalScrollIndicator: true,
 		  width: '100%',
 		  backgroundColor: '#fff',
-		  top: 40,
+		  top: 40 * Util.RATIO,
 		});
 		labelContent = Ti.UI.createLabel({
 			text: story.content,
-			left: 5,
-			right: 5,
-			top: 5,
-			font: { fontSize: 18 },
+			left: 5 * Util.RATIO,
+			right: 5 * Util.RATIO,
+			top: 5 * Util.RATIO,
+			font: { fontSize: 18  * Util.RATIO},
 		});
 		view.add(labelContent);
 		// view.add(topBar);

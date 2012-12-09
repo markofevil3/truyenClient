@@ -8,8 +8,8 @@ function Account(tab) {
 	self.barImage = '/images/handheld/top.png';
 	var facebookButton = Titanium.Facebook.createLoginButton({
 		style: Ti.Facebook.BUTTON_STYLE_NORMAL,
-		width: 200,
-		height: 50
+		width: 200  * Util.RATIO,
+		height: 50 * Util.RATIO
 	});
 	var view = Ti.UI.createView({
 		width: '100%',

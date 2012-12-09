@@ -1,8 +1,9 @@
 function Home() {
 	var self = Ti.UI.createWindow({
 		title: 'Home',
+		backgroundImage: '/images/handheld/setting_bg.png',
 	});
-	self.barImage = '/images/handheld/corkboard.jpg';
+	self.barImage = '/images/handheld/top.png';
 	// Create an array of explicitly defined custom TableViewRows
 	var tbl_data = [];
 	var homeMenus = [
@@ -14,6 +15,7 @@ function Home() {
 		var row = Ti.UI.createTableViewRow({
 			height: 120 * Util.RATIO,
 			backgroundColor: 'transparent',
+			backgroundImage: '/images/handheld/bookShelf.png',
 			selectedBackgroundColor: 'transparent',
 			name: homeMenus[i].name,
 			id: homeMenus[i].id
@@ -27,7 +29,7 @@ function Home() {
 		var title = Ti.UI.createLabel({
 			text: homeMenus[i].name,
 			color: '#fff',
-			font: { fontSize: 20 * Util.RATIO, fontWeight: 'bold' },
+			font: { fontSize: 20 * Util.RATIO, fontWeight: 'bold', fontFamily: 'Chalkboard SE' },
 			zIndex: 2
 		});
 		row.add(title);
@@ -37,15 +39,20 @@ function Home() {
 	
 	// now assign that array to the table's data property to add those objects as rows
 	var table = Titanium.UI.createTableView({
-	    data:tbl_data,
-	    backgroundImage: '/images/handheld/bookShelf.png',
-	    backgroundRepeat: true,
-	    separatorColor: 'transparent',
+    data:tbl_data,
+    backgroundColor: 'transparent',
+    separatorColor: 'transparent',
+    style: Ti.UI.iPhone.TableViewStyle.PLAIN,
+    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
 	});
 	
 	table.addEventListener('click', function(e) {
-		var Window = require('ui/tablet/' + e.rowData.id);
-		new Window(self);
+		if (e.rowData.id == 'FunnyList') {
+			alert('Comming Soon!');
+		} else {
+			var Window = require('ui/common/' + e.rowData.id);
+			new Window(self);			
+		}
 	});
 	self.add(table);
 	

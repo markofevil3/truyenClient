@@ -74,7 +74,7 @@ Util.dynamicLoad = function(tableView, data) {
 	var loadingView = Titanium.UI.createView();
 	loadingView.add(loadingIcon);
 	var loadingRow = Ti.UI.createTableViewRow({
-		height: 40,
+		height: 40 * Util.RATIO,
 	});
 	loadingRow.add(loadingView);
 	var lastRowIndex = tableView.data[0].rowCount;
@@ -103,7 +103,7 @@ Util.dynamicLoad = function(tableView, data) {
 		for (var i = lastRowIndex - 1; i < nextRowIndex; i++) {
 			var row = Ti.UI.createTableViewRow({
 		    backgroundImage: '/images/handheld/bookShelf.png',
-				height: 40,
+				height: 40 * Util.RATIO,
 				chapterId: data[i]._id,
 				id: tableView.id,
 				// id: data[i]._id,
@@ -113,11 +113,11 @@ Util.dynamicLoad = function(tableView, data) {
 				text: 'Chapter ' + data[i].chapter,
 				color: '#fff',
 				textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-				font: { fontWeight: 'bold', fontSize: 17, fontFamily: 'Chalkboard SE' }
+				font: { fontWeight: 'bold', fontSize: 17 * Util.RATIO, fontFamily: 'Chalkboard SE' }
 			});
 			var labelTitle = Ti.UI.createLabel({
 				text: data[i].title,
-				left: 105
+				left: 105 * Util.RATIO
 			});
 			row.add(labelChapter);
 			row.add(labelTitle);

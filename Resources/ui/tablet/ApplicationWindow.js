@@ -2,7 +2,7 @@ function ApplicationWindow(title) {
 	var tab;
 	switch (title) {
 		case 'Home':
-			Window = require('ui/tablet/Home');
+			Window = require('ui/common/Home');
 			break;
 		case 'Favorites':
 			Window = require('ui/common/Favorites');

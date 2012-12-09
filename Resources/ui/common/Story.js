@@ -5,7 +5,7 @@ function Story(item, tab) {
 		for (var i = 0; i < data.length; i++) {
 			var row = Ti.UI.createTableViewRow({
 		    backgroundImage: '/images/handheld/bookShelf.png',
-				height: 40,
+				height: 40 * Util.RATIO,
 				id: item.id,
 				chapterId: data[i]._id,
 				info: data[i],
@@ -14,14 +14,14 @@ function Story(item, tab) {
 			var labelChapter = Ti.UI.createLabel({
 				text: 'Chapter ' + data[i].chapter + ':',
 				color: '#fff',
-				left: 17,
-				font: { fontWeight: 'bold', fontSize: 17, fontFamily: 'Chalkboard SE' }
+				left: 17 * Util.RATIO,
+				font: { fontWeight: 'bold', fontSize: 17 * Util.RATIO, fontFamily: 'Chalkboard SE' }
 			});
 			var labelTitle = Ti.UI.createLabel({
 				text: data[i].title,
-				left: 115,
+				left: 115 * Util.RATIO,
 				color: '#fff',
-				font: { fontWeight: 'bold', fontSize: 17, fontFamily: 'Chalkboard SE' }
+				font: { fontWeight: 'bold', fontSize: 17 * Util.RATIO, fontFamily: 'Chalkboard SE' }
 			});
 			row.add(labelChapter);
 			row.add(labelTitle);
@@ -33,13 +33,12 @@ function Story(item, tab) {
 	
 	function selectItem(item) {
 		item.addEventListener('click', function(e) {
-			var Window = require('ui/handheld/StoryReading');
+			var Window = require('ui/common/StoryReading');
 			new Window(item);
 		});
 	};
 	var favoriteButton = Titanium.UI.createButton({
 		text: 'favorite', 
-		// backgroundImage:'/images/handheld/corkboard.jpg',
 		color: '#fff',
 		height: 40,
 		width: 40,
@@ -105,17 +104,17 @@ function Story(item, tab) {
 			var view = Ti.UI.createView({
 				backgroundColor: '#222',
 				height: 40,
-				backgroundImage: '/images/handheld/searchBackground.png',
+				backgroundImage: '/images/handheld/setting_bg.png',
 				backgroundColor: 'transparent',
-				top: 120
+				top: 120 * Util.RATIO
 			});
 			var search = Titanium.UI.createSearchBar({
 				barColor:'transparent',
 				hintText:'search',
-				backgroundImage: '/images/handheld/search.png',
+				backgroundImage: '/images/handheld/setting_bg.png',
 				backgroundColor: 'transparent',
 				width: '70%',
-				left: 16
+				left: 16 * Util.RATIO
 			});
 			search.addEventListener('change', function(e) {
 				var results = [];
@@ -142,13 +141,14 @@ function Story(item, tab) {
 			});
 			//#### sort
 			var sortButton = Titanium.UI.createButton({
-				text: 'sort',
-				color: '#fff',
+				opacity: 0.7,
 				height: 30,
 				width: 30,
 				right: '8%',
-				backgroundColor: 'transparent',
-				backgroundImage: '/images/handheld/sort.png',
+				borderRadius: 4,
+				borderWidth: 1,
+				borderColor: '#9b652e',
+				backgroundImage: '/images/handheld/sort-button2.png',
 			});
 			var optionsDialogOpts = {
 				options:['A -> Z', 'Z -> A'],
@@ -179,7 +179,7 @@ function Story(item, tab) {
 		};
 		var infoView = Titanium.UI.createView({
 			width: '100%',
-			height: 120,
+			height: 120 * Util.RATIO,
 			top: 0,
 			backgroundColor: '#d8cdc0',
 			backgroundImage: '/images/handheld/whitePaper.png',
@@ -187,7 +187,7 @@ function Story(item, tab) {
 			var bookView = Titanium.UI.createView({
 			width: '22%',
 			height: '100%',
-			left: 5
+			left: 5 * Util.RATIO
 		});
 		var book = Titanium.UI.createImageView({
 			image: '/images/handheld/book1.png',
@@ -206,35 +206,44 @@ function Story(item, tab) {
 		});
 		bookView.add(book);
 		bookView.add(cover);
+		var detailsView = Ti.UI.createView({
+			width: '75%',
+			height: '92%',
+			left: '24%',
+			layout: 'vertical'
+		});
+		
 		var labelTitle = Ti.UI.createLabel({
 			text: json.data.title,
-			left: '25%',
-			top: 2,
-			font: { fontWeight: 'bold', fontSize: 17 }
+			textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+			width: '100%',
+			font: { fontWeight: 'bold', fontSize: 17 * Util.RATIO}
 		});
 		var labelAuthor = Ti.UI.createLabel({
-			top: 20,
-			left: '25%',
 			text: 'Tác giả: ' + json.data.author,
-			font: { fontSize: 15, fontStyle: 'italic' }
+			textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+			width: '100%',
+			font: { fontSize: 15 * Util.RATIO, fontStyle: 'italic' }
 		});
 		var labelDes = Ti.UI.createLabel({
-			top: 36,
-			left: '25%',
 			text: json.data.shortDes,
-			font: { fontSize: 14 }
+			width: '100%',
+			textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+			font: { fontSize: 14 * Util.RATIO },
+			height: '60%'
 		});
+		detailsView.add(labelTitle);
+		detailsView.add(labelAuthor);
+		detailsView.add(labelDes);
 		infoView.add(bookView);
-		infoView.add(labelTitle);
-		infoView.add(labelAuthor);
-		infoView.add(labelDes);
+		infoView.add(detailsView);
 		var table = Titanium.UI.createTableView({
 	    data: tbl_data,
 	    backgroundColor: 'transparent',
 	    separatorColor: 'transparent',
 	    style: Ti.UI.iPhone.TableViewStyle.PLAIN,
 	    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-	    top: 160,
+	    top: 160 * Util.RATIO - 40,
 		});
 		self.add(table);
 		self.add(infoView);

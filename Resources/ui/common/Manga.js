@@ -37,7 +37,6 @@ function Manga(item, tab) {
 	};
 	var favoriteButton = Titanium.UI.createButton({
 		text: 'favorite', 
-		// backgroundImage:'/images/handheld/corkboard.jpg',
 		color: '#fff',
 		height: 40,
 		width: 40,
@@ -121,7 +120,7 @@ function Manga(item, tab) {
 			var search = Titanium.UI.createSearchBar({
 				barColor:'transparent',
 				hintText:'search',
-				backgroundImage: '/images/handheld/search.png',
+				backgroundImage: '/images/handheld/setting_bg.png',
 				backgroundColor: 'transparent',
 				width: '70%',
 				height: 40,
@@ -152,13 +151,14 @@ function Manga(item, tab) {
 			});
 			//#### sort
 			var sortButton = Titanium.UI.createButton({
-				text: 'sort',
-				color: '#fff',
+				opacity: 0.7,
 				height: 30,
 				width: 30,
 				right: '8%',
-				backgroundColor: 'transparent',
-				backgroundImage: '/images/handheld/sort.png',
+				borderRadius: 4,
+				borderWidth: 1,
+				borderColor: '#9b652e',
+				backgroundImage: '/images/handheld/sort-button2.png',
 			});
 			var optionsDialogOpts = {
 				options:['A -> Z', 'Z -> A'],
@@ -193,7 +193,7 @@ function Manga(item, tab) {
 	    separatorColor: 'transparent',
 	    style: Ti.UI.iPhone.TableViewStyle.PLAIN,
 	    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-	    top: 160 * Util.RATIO - 40,
+	    top: 160 * Util.RATIO - (40 * (Util.RATIO - 1)),
 	    id: item.id,
 		});
 		Util.dynamicLoad(table, listChapters);

@@ -5,7 +5,7 @@ function MangaList(tab) {
 		var dataSet = [];
 		for (var i = 0; i < Math.round(data.length / 3); i++) {
 			var row = Ti.UI.createTableViewRow({
-				height:120,
+				height:120 * Util.RATIO,
 				backgroundColor: 'transparent',
 				backgroundImage: '/images/handheld/bookShelf.png',
 				selectedBackgroundColor: 'transparent',
@@ -16,9 +16,9 @@ function MangaList(tab) {
 					var bookView = Ti.UI.createView({
 						width: '18%',
 						height: '60%',
-						bottom: 10,
+						bottom: 10 * Util.RATIO,
 						left: 12 + (j * (21 + 8)) + '%',
-						title: data[index].title,
+						name: data[index].title,
 						id: data[index]._id,
 					});
 					var image = Ti.UI.createImageView({
@@ -42,22 +42,22 @@ function MangaList(tab) {
 						text: data[index].title,
 						color: '#fff',
 						// backgroundImage: '/images/handheld/bg_paper_tournament.png',
-						height: 29,
-						width: 85,
-						font: { fontSize: 13, fontWeight: 'bold', fontFamily: 'Chalkboard SE'},
+						height: 29 * Util.RATIO,
+						width: 85 * Util.RATIO,
+						font: { fontSize: 13 * Util.RATIO, fontWeight: 'bold', fontFamily: 'Chalkboard SE'},
 						textAlign: 'center',
-						top: 3,
+						top: 3 * Util.RATIO,
 						horizontalWrap: true,
 						left: 8 + (j * (21 + 8)) + '%',
 						zIndex: 3,
-						title: data[index].title,
+						name: data[index].title,
 						id: data[index]._id,
 					});
 					var nameTagBackground = Ti.UI.createImageView({
 						image: '/images/handheld/bg_paper_tournament.png',
-						height: 43,
+						height: 43 * Util.RATIO,
 						top: 0,
-						width: 90,
+						width: 90 * Util.RATIO,
 						left: 7.5 + (j * (21 + 8)) + '%',
 						zIndex: 2
 					});
@@ -81,6 +81,7 @@ function MangaList(tab) {
 	};
 	var self = Ti.UI.createWindow({
 		title: 'Manga',
+		backgroundImage: '/images/handheld/setting_bg.png',
 	});
 	var listManga;
 	//change top bar image
@@ -101,16 +102,16 @@ function MangaList(tab) {
 			var view = Ti.UI.createView({
 				backgroundColor: '#222',
 				height: 40,
-				backgroundImage: '/images/handheld/searchBackground.png',
+				backgroundImage: '/images/handheld/setting_bg.png',
 				backgroundColor: 'transparent',
 				top: 0
 			});
 			search = Titanium.UI.createSearchBar({
 				barColor:'transparent',
-				backgroundImage: '/images/handheld/search.png',
+				backgroundImage: '/images/handheld/setting_bg.png',
 				hintText:'search',
 				width: '70%',
-				left: 16
+				left: 16 * Util.RATIO
 			});
 			search.addEventListener('change', function(e) {
 				var results = [];
@@ -138,13 +139,15 @@ function MangaList(tab) {
 			});
 			//#### sort
 			var sortButton = Titanium.UI.createButton({
-				text: 'sort',
 				color: '#fff',
+				opacity: 0.7,
 				height: 30,
 				width: 30,
 				right: '8%',
-				backgroundColor: 'transparent',
-				backgroundImage: '/images/handheld/sort.png',
+				borderRadius: 4,
+				borderWidth: 1,
+				borderColor: '#9b652e',
+				backgroundImage: '/images/handheld/sort-button2.png',
 			});
 			var optionsDialogOpts = {
 				options:['A -> Z', 'Most View', 'Newest', 'Z -> A'],
@@ -183,7 +186,7 @@ function MangaList(tab) {
 		
 		var table = Titanium.UI.createTableView({
 	    data:tbl_data,
-	    backgroundImage: '/images/handheld/bookShelf.png',
+	    backgroundColor: 'transparent',
 	    separatorColor: 'transparent',
 	    style: Ti.UI.iPhone.TableViewStyle.PLAIN,
 	    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
@@ -200,7 +203,7 @@ function MangaList(tab) {
 			});
 			loadingView.add(loadingIcon);
 			var loadingRow = Ti.UI.createTableViewRow({
-				height: 40,
+				height: 40 * Util.RATIO,
 				backgroundColor: 'transparent',
 				backgroundImage: 'NONE'
 			});

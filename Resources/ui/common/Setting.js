@@ -24,7 +24,6 @@ function Setting() {
 		bottom: 0,
 		textAlign:'center', 
 		backgroundColor: 'transparent',
-		// backgroundImage: '/images/handheld/background.png'
 	});
 	var tbl_data = [];
 	

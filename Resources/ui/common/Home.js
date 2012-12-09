@@ -4,7 +4,6 @@ function Home() {
 		backgroundImage: '/images/handheld/setting_bg.png',
 	});
 	self.barImage = '/images/handheld/top.png';
-	// Create an array of explicitly defined custom TableViewRows
 	var tbl_data = [];
 	var homeMenus = [
 		{ 'id': 'MangaList', 'name': 'Manga', 'image': '/images/handheld/woodbar.png' },
@@ -36,8 +35,6 @@ function Home() {
 		row.add(image);
 		tbl_data.push(row);
 	}
-	
-	// now assign that array to the table's data property to add those objects as rows
 	var table = Titanium.UI.createTableView({
     data:tbl_data,
     backgroundColor: 'transparent',

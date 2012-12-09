@@ -91,7 +91,7 @@ function selectItem(item, type) {
 		if (type == 0) {
 			dir = 'ui/common/Manga';
 		} else {
-			dir = 'ui/handheld/Story';
+			dir = 'ui/common/Story';
 		}
 		var Window = require(dir);
 		new Window(item, tab);

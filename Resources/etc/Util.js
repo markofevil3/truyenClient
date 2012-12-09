@@ -88,7 +88,7 @@ Util.dynamicLoad = function(tableView, data) {
 	};
 	function selectItem(item) {
 		item.addEventListener('click', function(e) {
-			var Window = require('ui/handheld/Reading');
+			var Window = require('ui/common/Reading');
 			new Window(item);
 		});
 	};

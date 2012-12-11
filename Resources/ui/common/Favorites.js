@@ -23,7 +23,7 @@ function Favorites() {
     separatorColor: 'transparent',
   	style: Ti.UI.iPhone.TableViewStyle.PLAIN,
     separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-    top: 30,
+    top: 30 + (40 * Util.RATIO),
 	});
 	function getFavorites() {
 		Util.getAjax('/getFavorites', {
@@ -80,6 +80,15 @@ function Favorites() {
 		function(response) {
 		});
 	});
+	var adView = Ti.UI.createView({
+		width: '100%',
+		height: 40 * Util.RATIO,
+		top : 30,
+	});
+	Util.adv(6, function(advImage) {
+		adView.add(advImage);
+	});
+	self.add(adView);
 	self.add(tabBar);
 	self.add(tableView);
 	return self;

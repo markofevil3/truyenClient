@@ -183,16 +183,14 @@ function MangaList(tab) {
 			view.add(sortButton);
 			return view;
 		};
-		
 		var table = Titanium.UI.createTableView({
 	    data:tbl_data,
 	    backgroundColor: 'transparent',
 	    separatorColor: 'transparent',
 	    style: Ti.UI.iPhone.TableViewStyle.PLAIN,
 	    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-	    top: 40
+	    top: 40 + (40 * Util.RATIO),
 		});
-		
 		function dynamicLoad(tableView, data) {
 			var loadingIcon = Titanium.UI.createActivityIndicator({
 				style:Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
@@ -251,7 +249,16 @@ function MangaList(tab) {
 			});
 		};
 		dynamicLoad(table, listManga);
+		var adView = Ti.UI.createView({
+			width: '100%',
+			height: 40 * Util.RATIO,
+			top : 40,
+		});
+		Util.adv(1, function(advImage) {
+			adView.add(advImage);
+		});
 		self.add(createCustomView());
+		self.add(adView);
 		self.add(table);
 		tab.containingTab.open(self);
 	});

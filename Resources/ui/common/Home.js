@@ -10,6 +10,26 @@ function Home() {
 		{ 'id': 'StoryList', 'name': 'Truyen Chu', 'image': '/images/handheld/bg_paper_tournament.png' },
 		{ 'id': 'FunnyList', 'name': 'Truyen Cuoi', 'image': '/images/handheld/bg_paper_tournament.png' },
 	];
+		//## ADVERTISE
+	var isTablet = Util.isTablet();
+	var device;
+	if (isTablet) {
+		device = 1;
+	} else {
+		device = 0;
+	}
+	var advRow = Ti.UI.createTableViewRow({
+		height: 40 * Util.RATIO,
+		backgroundColor: '#fff',
+		// backgroundImage: '/images/handheld/bookShelf.png',
+		selectedBackgroundColor: 'transparent',
+		name: 'Advertise',
+		id: 'Advertise'
+	});
+	Util.adv(0, function(advImage) {
+		advRow.add(advImage);
+	});
+	tbl_data.push(advRow);
 	for (var i = 0; i < homeMenus.length; i++) {
 		var row = Ti.UI.createTableViewRow({
 			height: 120 * Util.RATIO,
@@ -33,8 +53,17 @@ function Home() {
 		});
 		row.add(title);
 		row.add(image);
+		row.addEventListener('click', function(e) {
+			if (e.rowData.id == 'FunnyList') {
+				alert('Comming Soon!');
+			} else {
+				var Window = require('ui/common/' + e.rowData.id);
+				new Window(self);			
+			}
+		});
 		tbl_data.push(row);
 	}
+	
 	var table = Titanium.UI.createTableView({
     data:tbl_data,
     backgroundColor: 'transparent',
@@ -43,14 +72,14 @@ function Home() {
     separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
 	});
 	
-	table.addEventListener('click', function(e) {
-		if (e.rowData.id == 'FunnyList') {
-			alert('Comming Soon!');
-		} else {
-			var Window = require('ui/common/' + e.rowData.id);
-			new Window(self);			
-		}
-	});
+	// table.addEventListener('click', function(e) {
+		// if (e.rowData.id == 'FunnyList') {
+			// alert('Comming Soon!');
+		// } else {
+			// var Window = require('ui/common/' + e.rowData.id);
+			// new Window(self);			
+		// }
+	// });
 	self.add(table);
 	
 	return self;

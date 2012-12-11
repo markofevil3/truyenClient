@@ -54,20 +54,38 @@ function Reading(item) {
 		topBar.add(pagesLabel);
 		topBar.add(chapterLabel);
 		topBar.add(buttonClose);
+		var adView = Ti.UI.createView({
+			width: '100%',
+			height: 40 * Util.RATIO,
+			bottom: 0,
+			zIndex: 999
+		});
+		Util.adv(3, function(advImage) {
+			adView.add(advImage);
+		});
 		self.addEventListener('singletap', function() {
 			if (topBar.visible) {
+				adView.animate({opacity: 0, duration: 1000}, function() {
+					adView.hide();
+				});
 				topBar.animate({opacity: 0, duration: 1000}, function() {
 					topBar.hide();
 				});
 			} else {
+				adView.show();
+				adView.animate({opacity: 1, duration: 1000}, function() {
+				});
 				topBar.show();
 				topBar.animate({opacity: 1, duration: 1000}, function() {
 				});
 			}
 		});
+		adView.hide();
+		adView.opacity = 0;
 		topBar.hide();
 		topBar.opacity = 0;
 		self.add(topBar);
+		self.add(adView);
 		//### END TOP BAR
 		//ADD IMAGES
 		var maxZindex = listImages.length;

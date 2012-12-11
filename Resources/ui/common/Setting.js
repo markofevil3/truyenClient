@@ -6,11 +6,7 @@ function Setting() {
 		backgroundImage: '/images/handheld/setting_bg.png'
 	});
 	self.barImage = '/images/handheld/top.png';
-	var osname = Ti.Platform.osname;
-	var version = Ti.Platform.version;
-	var height = Ti.Platform.displayCaps.platformHeight;
-	var width = Ti.Platform.displayCaps.platformWidth;
-	var isTablet = osname === 'ipad' || (osname === 'android' && (width > 899 || height > 899));
+	var isTablet = Util.isTablet();
 	var type;
 	if (isTablet) {
 		type = 1;

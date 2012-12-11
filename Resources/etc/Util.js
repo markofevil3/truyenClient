@@ -178,7 +178,25 @@ Util.removeUTF8 = function(str) {
   str= str.replace(/-+-/g,"-");
   str= str.replace(/^\-+|\-+$/g,"");  
   return str;  
-}
+};
+
+Util.adv = function(type, callback) {
+	var advImage = Ti.UI.createImageView({
+		width: '100%',
+		height: '100%',
+		image: Util.SERVER + '/images/adv/adv0.jpg',
+	});
+	Util.getAjax('/adv', {
+		'type': type
+	},
+	function(response) {
+		var link = JSON.parse(response).data;
+		advImage.addEventListener('click', function(e) {
+			Titanium.Platform.openURL(link);
+		});
+		callback(advImage);
+	});
+};
 
 function isHash(obj) {
   return obj.constructor == Object;

@@ -193,7 +193,7 @@ function Manga(item, tab) {
 	    separatorColor: 'transparent',
 	    style: Ti.UI.iPhone.TableViewStyle.PLAIN,
 	    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-	    top: 160 * Util.RATIO - (40 * (Util.RATIO - 1)),
+	    top: 160 * Util.RATIO - (40 * (Util.RATIO - 1)) + (40 * Util.RATIO),
 	    id: item.id,
 		});
 		Util.dynamicLoad(table, listChapters);
@@ -276,7 +276,16 @@ function Manga(item, tab) {
 		details.add(labelView);
 		infoView.add(bookView);
 		infoView.add(details);
+		var adView = Ti.UI.createView({
+			width: '100%',
+			height: 40 * Util.RATIO,
+			top : 160 * Util.RATIO - (40 * (Util.RATIO - 1)),
+		});
+		Util.adv(2, function(advImage) {
+			adView.add(advImage);
+		});
 		self.add(infoView);
+		self.add(adView);
 		self.add(createCustomView());
 		self.add(table);
 		tab.containingTab.open(self);

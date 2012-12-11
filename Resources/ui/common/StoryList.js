@@ -279,10 +279,19 @@ function StoryList(tab) {
 	    // backgroundImage: '/images/handheld/setting_bg.png',
 	    backgroundColor: 'transparent',
 	    separatorColor: '#aa7845',
-	    top: 40
+	    top: 40 + (40 * Util.RATIO)
 		});
 		dynamicLoad(table);
+		var adView = Ti.UI.createView({
+			width: '100%',
+			height: 40 * Util.RATIO,
+			top : 40,
+		});
+		Util.adv(4, function(advImage) {
+			adView.add(advImage);
+		});
 		self.add(createCustomView());
+		self.add(adView);
 		self.add(table);
 		tab.containingTab.open(self);
 	});

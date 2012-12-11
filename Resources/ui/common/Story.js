@@ -243,8 +243,17 @@ function Story(item, tab) {
 	    separatorColor: 'transparent',
 	    style: Ti.UI.iPhone.TableViewStyle.PLAIN,
 	    separatorStyle: Titanium.UI.iPhone.TableViewSeparatorStyle.NONE,
-	    top: 160 * Util.RATIO - 40,
+	    top: 160 * Util.RATIO - (40 * (Util.RATIO - 1)) + (40 * Util.RATIO),
 		});
+		var adView = Ti.UI.createView({
+			width: '100%',
+			height: 40 * Util.RATIO,
+			top : 160 * Util.RATIO - (40 * (Util.RATIO - 1)),
+		});
+		Util.adv(5, function(advImage) {
+			adView.add(advImage);
+		});
+		self.add(adView);
 		self.add(table);
 		self.add(infoView);
 		self.add(createCustomView());

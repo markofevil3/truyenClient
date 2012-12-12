@@ -3,7 +3,7 @@ function Setting() {
 	var self = Ti.UI.createWindow({
 		title: 'Setting',
 		backgroundColor: 'transparent',
-		backgroundImage: '/images/handheld/setting_bg.png'
+		backgroundImage: '/images/handheld/setting_bg.png',
 	});
 	self.barImage = '/images/handheld/top.png';
 	var isTablet = Util.isTablet();
@@ -20,6 +20,9 @@ function Setting() {
 		bottom: 0,
 		textAlign:'center', 
 		backgroundColor: 'transparent',
+	});
+	self.addEventListener('focus', function(f) {
+		webview.url = Util.SERVER + '/facebook?type=' + type;
 	});
 	var tbl_data = [];
 	

@@ -1,3 +1,4 @@
+var Util = require('etc/Util');
 function Home() {
 	var self = Ti.UI.createWindow({
 		title: 'Home',

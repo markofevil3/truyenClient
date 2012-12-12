@@ -22,7 +22,7 @@ function Support(tab) {
 		keyboardType : Ti.UI.KEYBOARD_DEFAULT,
 		returnKeyType : Ti.UI.RETURNKEY_DEFAULT,
 	  textAlign: 'left',
-	  hintText : 'This is a hint text',
+	  hintText : 'Nội dung...',
 	  width: '95%',
 	  height : 170 * Util.RATIO,
 	  top: 10 * Util.RATIO,

@@ -20,7 +20,7 @@ function overrideTabs(tabGroup, backgroundOptions, selectedOptions, deselectedOp
     backgroundOptions.height = 50;
     var background = Ti.UI.createView(backgroundOptions);
 
-    // pass all touch events through to the tabs beneath our background
+    // pass all touch events through to the tabs beneath our background	
     background.touchEnabled = false;
 
     // create our individual tab buttons
@@ -54,8 +54,18 @@ function overrideTabs(tabGroup, backgroundOptions, selectedOptions, deselectedOp
         selectedOptions.visible = false;
         background.add(tab.deselected = Ti.UI.createButton(deselectedOptions));
         background.add(tab.selected = Ti.UI.createButton(selectedOptions));
-        
-        
+        Titanium.Gesture.addEventListener('orientationchange', function(e) {
+			    switch (Titanium.Gesture.orientation) {
+		        case Titanium.UI.LANDSCAPE_LEFT:
+		        case Titanium.UI.LANDSCAPE_RIGHT:
+		            background.width = '100%';
+		        break;
+		        case Titanium.UI.PORTRAIT:
+		        case Titanium.UI.UPSIDE_PORTRAIT:
+							background.width = '100%';  
+		        break;
+			    }
+				});
     }
 
     // update the tab group, removing any old overrides
